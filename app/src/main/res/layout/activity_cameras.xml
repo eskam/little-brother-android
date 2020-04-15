@@ -23,7 +23,7 @@
         android:id="@+id/navitationView"
         app:menu="@menu/drawer_menu"
         app:headerLayout="@layout/drawer_header"
-        android:layout_gravuty="start"
+        android:layout_gravity="start"
         android:fitsSystemWindows="true">
     </com.google.android.material.navigation.NavigationView>
 
