@@ -4,10 +4,6 @@
     <string name="button_signup">Sign up</string>
     <string name="button_signin">Sign in</string>
     <string name="button_logout">Log out</string>
-
     <string name="already_registered">Already registered ? Sign in, here…</string>
     <string name="not_already_registered">No account yet ? Sign up, here…</string>
-
-    <string name="open">open</string>
-    <string name="close">close</string>
 </resources>

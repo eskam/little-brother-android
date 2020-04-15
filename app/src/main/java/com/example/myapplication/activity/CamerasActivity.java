@@ -27,7 +27,7 @@ public class CamerasActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer);
         mNavigationView = findViewById(R.id.navitationView);
 
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,mToolbar,R.string.open,R.string.close);
+        //mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,mToolbar,R.string.open,R.string.close);
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
         mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         mActionBarDrawerToggle.syncState();
