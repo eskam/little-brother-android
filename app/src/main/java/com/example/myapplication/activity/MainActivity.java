@@ -68,49 +68,58 @@ public class MainActivity extends Activity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         firebaseUser = mAuth.getCurrentUser();
-        updateUI(firebaseUser);
-        CameraModel cam = new CameraModel("moi", "lui", new ZoneModel(1.1, 1.2, 2.1, 2.2, 3.0));
-        firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                String idToken = task.getResult().getToken();
-                Log.i("token", idToken);
-                /*Call<CameraModel> camRequest = cameraNet.post("Bearer " + idToken, cam);
-                camRequest.enqueue(new Callback<CameraModel>() {
-                    @Override
-                    public void onResponse(@NotNull Call<CameraModel> call, @NotNull Response<CameraModel> response) {
-                        raw_text.setText(response.body().toString());
-                    }
-                    @Override
-                    public void onFailure(@NotNull Call<CameraModel> call, @NotNull Throwable t) {
-                        raw_text.setText("errror " + t.getMessage());
-                    }
-                });*/
-                // Send token to your backend via HTTPS
-                Call<TestObject> call = testobj.get("Bearer " + idToken);
-                call.enqueue(new Callback<TestObject>() {
-                    @Override
-                    public void onResponse(@NotNull Call<TestObject> call, @NotNull Response<TestObject> response) {
-                        raw_text.setText(response.body().getType());
-                    }
-                    @Override
-                    public void onFailure(@NotNull Call<TestObject> call, @NotNull Throwable t) {
-                        raw_text.setText(t.getMessage());
-                    }
-                });
+        if (updateUI(firebaseUser)) {
+            CameraModel cam = new CameraModel("moi", "lui", new ZoneModel(1.1, 1.2, 2.1, 2.2, 3.0));
+            firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    String idToken = task.getResult().getToken();
+                    Log.i("token", idToken);
+                    /*Call<CameraModel> camRequest = cameraNet.post("Bearer " + idToken, cam);
+                    camRequest.enqueue(new Callback<CameraModel>() {
+                        @Override
+                        public void onResponse(@NotNull Call<CameraModel> call, @NotNull Response<CameraModel> response) {
+                            raw_text.setText(response.body().toString());
+                        }
+                        @Override
+                        public void onFailure(@NotNull Call<CameraModel> call, @NotNull Throwable t) {
+                            raw_text.setText("errror " + t.getMessage());
+                        }
+                    });*/
+                    // Send token to your backend via HTTPS
+                    Call<TestObject> call = testobj.get("Bearer " + idToken);
+                    call.enqueue(new Callback<TestObject>() {
+                        @Override
+                        public void onResponse(@NotNull Call<TestObject> call, @NotNull Response<TestObject> response) {
+                            raw_text.setText(response.body().getType());
+                        }
 
-            }
-        });
+                        @Override
+                        public void onFailure(@NotNull Call<TestObject> call, @NotNull Throwable t) {
+                            raw_text.setText(t.getMessage());
+                        }
+                    });
+
+                }
+            });
+        }
     }
 
-    private void updateUI(FirebaseUser currentUser) {
-        if (currentUser != null) {
+    private boolean updateUI(FirebaseUser currentUser) {
+        try {
+            currentUser.getIdToken(true);
+        } catch (Exception e) {
+            navigation.navigateToSignIn(getApplicationContext(), this);
+            return false;
+        }
+        return true;
+        /*if (currentUser != null) {
             firebaseUser = currentUser;
             Toast.makeText(this, "Vous êtes déjà connecté",Toast.LENGTH_SHORT).show();
         } else {
             firebaseUser = null;
             Toast.makeText(this, "Merci de vous connecter",Toast.LENGTH_SHORT).show();
             navigation.navigateToSignIn(getApplicationContext(), this);
-        }
+        }*/
     }
 
     public void logout() {

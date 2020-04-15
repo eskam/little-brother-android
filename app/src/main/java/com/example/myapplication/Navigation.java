@@ -12,16 +12,22 @@ public class Navigation {
 
     public void navigateToMain(Context context, Activity activity) {
         activity.finish();
-        context.startActivity(new Intent(activity, MainActivity.class));
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     public void navigateToSignUp(Context context, Activity activity) {
         activity.finish();
-        context.startActivity(new Intent(activity, SignUpActivity.class));
+        Intent intent = new Intent(activity, SignUpActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     public void navigateToSignIn(Context context, Activity activity) {
         activity.finish();
-        context.startActivity(new Intent(activity, SignInActivity.class));
+        Intent intent = new Intent(activity, SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
