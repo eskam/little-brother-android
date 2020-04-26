@@ -18,6 +18,13 @@
             android:layout_height="wrap_content"
             android:text="@string/button_logout" />
 
+        <Button
+            android:id="@+id/btnMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Map"
+            tools:ignore="MissingConstraints" />
+
         <TextView
             android:id="@+id/raw_data"
             android:layout_width="match_parent"

@@ -19,8 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import com.example.myapplication.R;
 
+import com.example.myapplication.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -130,7 +130,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
 
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM,
-                    /*mPlace,*/ address.getAddressLine(0));
+                    address.getAddressLine(0));
         }
     }
 
@@ -151,7 +151,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             Location currentLocation = (Location) task.getResult();
 
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM,/* mPlace,*/ "My Location");
+                                    DEFAULT_ZOOM, "My Location");
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
@@ -175,12 +175,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMapToolbarEnabled(true);
 
+        // Marker
         if (!title.equals("My Location")) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .title(title);
             mMap.addMarker(markerOptions);
-            // Instantiates a new CircleOptions object and defines the center and radius
+            // Cercle
             CircleOptions circleOptions = new CircleOptions()
                     .center(latLng)
                     .radius(1000); // In meters

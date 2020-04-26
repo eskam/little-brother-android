@@ -17,7 +17,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA_jS1nSrmtrgQ22-IpaphCGhV549UdW5o"/>
+            android:value="@string/cle_api"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -37,6 +37,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SignUpActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.ATTACH_DATA" />
+                <category android:name="android.intent.category.EMBED" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ATTACH_DATA" />
                 <category android:name="android.intent.category.EMBED" />
