@@ -1,9 +1,12 @@
 package com.example.myapplication.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +30,8 @@ import com.example.myapplication.models.ZoneModel;
 import com.example.myapplication.network.CameraNet;
 import com.example.myapplication.network.GetTestObject;
 import com.example.myapplication.network.RetrofitInstance;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -57,16 +62,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
 
-    // private TextView raw_text; //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // private Button logout; //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // private Button camera;  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    private TextView raw_text;
+    private Button logout;
     Retrofit retrofit;
     GetTestObject testobj;
     CameraNet cameraNet;
 
-
-
+    //Map
+    private static final String TAG = "MainActivityMAP";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,16 +92,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // END TOOL BAR
 
         navigation = new Navigation();
+
         mAuth = FirebaseAuth.getInstance();
 
-        // camera = findViewById(R.id.button_camera); //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // raw_text = findViewById(R.id.raw_data); //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //logout = findViewById(R.id.logout); //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //logout.setOnClickListener(new LogOutOnClickListener(this)); //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // camera.setOnClickListener(new CameraOnClickListener(this)); //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        raw_text = findViewById(R.id.raw_data);
+        logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new LogOutOnClickListener(this));
 
         retrofit = RetrofitInstance.getRetrofitInstance();
         testobj = retrofit.create(GetTestObject.class);
@@ -112,6 +112,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragmentTransaction.commit();
         // END LOAD DEFAULT FRAGMENT
 
+
+        if (isServicesOK()) {
+            init();
+        }
     }
 
     @Override
@@ -141,12 +145,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     call.enqueue(new Callback<TestObject>() {
                         @Override
                         public void onResponse(@NotNull Call<TestObject> call, @NotNull Response<TestObject> response) {
-                            //  raw_text.setText(response.body().getType());
+                            raw_text.setText(response.body().getType());
                         }
 
                         @Override
                         public void onFailure(@NotNull Call<TestObject> call, @NotNull Throwable t) {
-                            // raw_text.setText(t.getMessage());
+                            raw_text.setText(t.getMessage());
                         }
                     });
 
@@ -154,24 +158,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
     }
-
-    // TOOL BAR
-    /*
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        if(item.getItemId() == R.id.profile){
-
-        }
-
-        if(item.getItemId() == R.id.logout){
-            this.logout();
-        }
-
-        return true;
-    }
-    */
-    // END TOOL BAR
 
     private boolean updateUI(FirebaseUser currentUser) {
         try {
@@ -231,8 +217,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         updateUI(mAuth.getCurrentUser());
     }
 
-    public void cameras() {
-        navigation.navigateToCameras(getApplicationContext(),this);
+    private void init() {
+        Button btnMap = (Button) findViewById(R.id.btnMap);
+        btnMap.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
+        });
     }
 
+    public boolean isServicesOK() {
+        Log.d(TAG, "isServicesOK: checking google services version");
+
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+
+        if (available == ConnectionResult.SUCCESS) {
+            //everything is fine and the user can make map requests
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            //an error occured but we can resolve it
+            Log.d(TAG, "isServicesOK: an error occured but we can fix it");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
 }

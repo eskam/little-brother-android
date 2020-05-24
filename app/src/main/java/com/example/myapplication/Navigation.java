@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.example.myapplication.activity.CamerasActivity;
 import com.example.myapplication.activity.MainActivity;
+import com.example.myapplication.activity.MapActivity;
 import com.example.myapplication.activity.SignInActivity;
 import com.example.myapplication.activity.SignUpActivity;
 
@@ -32,9 +33,9 @@ public class Navigation {
         context.startActivity(intent);
     }
 
-    public void navigateToCameras(Context context, Activity activity) {
+    public void navigateToMap(Context context, Activity activity) {
         activity.finish();
-        Intent intent = new Intent(activity, CamerasActivity.class);
+        Intent intent = new Intent(activity, MapActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
