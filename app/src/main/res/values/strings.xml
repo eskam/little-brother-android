@@ -4,6 +4,15 @@
     <string name="button_signup">Sign up</string>
     <string name="button_signin">Sign in</string>
     <string name="button_logout">Log out</string>
+
+    <string name="button_profile">Profile</string>
+    <string name="button_cameras">Cameras</string>
+    <string name="button_add">Add someone</string>
+    <string name="activity1">Activity1</string>
+    <string name="activity2">Activity2</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
     <string name="already_registered">Already registered ? Sign in, here…</string>
     <string name="not_already_registered">No account yet ? Sign up, here…</string>
 </resources>
