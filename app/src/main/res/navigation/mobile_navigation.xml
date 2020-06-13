@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_sign_in">
+
+    <fragment
+        android:id="@+id/nav_sign_in"
+        android:name="com.example.littlebrotherandroid.ui.signin.SignInFragment"
+        android:label="@string/menu_sign_in"
+        tools:layout="@layout/sign_in_fragment" />
+
+    <fragment
+        android:id="@+id/nav_sign_up"
+        android:name="com.example.littlebrotherandroid.ui.signup.SignUpFragment"
+        android:label="@string/menu_sign_up"
+        tools:layout="@layout/sign_up_fragment" />
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.littlebrotherandroid.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_camera"
+        android:name="com.example.littlebrotherandroid.ui.camera.CameraFragment"
+        android:label="@string/menu_camera"
+        tools:layout="@layout/fragment_camera" />
+</navigation>

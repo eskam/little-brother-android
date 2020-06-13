@@ -1,21 +1,20 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">LittleBrotherAndroid</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
-    <string name="button_signup">Sign up</string>
-    <string name="button_signin">Sign in</string>
-    <string name="button_logout">Log out</string>
-
-    <string name="button_profile">Profile</string>
-    <string name="button_cameras">Cameras</string>
-    <string name="button_add">Add someone</string>
-    <string name="activity1">Activity1</string>
-    <string name="activity2">Activity2</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
-
-    <string name="already_registered">Already registered ? Sign in, here…</string>
-    <string name="not_already_registered">No account yet ? Sign up, here…</string>
-    <string name="Map">Map</string>
-    <string name="text_btn_map">Adresse, ville, code postal</string>
-    <string name="cle_api">AIzaSyC1t9ck8g-PpS2CL3LPNWXeR_T3BFTJH_k</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_sign_in">Sign In</string>
+    <string name="menu_camera">Camera</string>
+    <string name="button_signin">sign in</string>
+    <string name="already_registered">already registered</string>
+    <string name="create_account">create account</string>
+    <string name="button_signup">Sign Up</string>
+    <string name="menu_sign_up">Sign Up</string>
 </resources>
