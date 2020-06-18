@@ -9,12 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.ui.recyclerViewCamera.CameraAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,14 @@ public class LittleBrothersFragment extends Fragment {
         cameraModelList.add(new CameraModel("Dijon","Dealer","Tchetchen",1.0,2.,3.0));
 
         recyclerView.setAdapter(new CameraAdapter(cameraModelList));
+
+        FloatingActionButton fab_add_camera = root.findViewById(R.id.fab_add_camera);
+        fab_add_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_add_camera);
+            }
+        });
 
         return root;
     }

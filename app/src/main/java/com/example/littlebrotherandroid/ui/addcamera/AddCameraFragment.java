@@ -65,7 +65,7 @@ public class AddCameraFragment extends Fragment {
     public boolean addCamera() {
         boolean statusRequest=true;
         Log.i("AddCameraFragment", nameCamera.getText().toString().trim() + "FirebaseToken" + littleBrother.getText().toString().trim());
-        CameraModel camera= new CameraModel(nameCamera.getText().toString().trim(),littleBrother.getText().toString().trim(), FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        CameraModel camera= new CameraModel(nameCamera.getText().toString().trim(),littleBrother.getText().toString().trim(), FirebaseAuth.getInstance().getCurrentUser().getEmail(),1.0,2.0,3.0);
         Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer "+Auth.getInstance().firebaseKey,camera);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

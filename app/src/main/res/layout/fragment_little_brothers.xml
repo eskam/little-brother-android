@@ -48,5 +48,15 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp" />
+        <!--android:src="@drawable/ic_my_icon"
+        android:contentDescription="@string/submit"-->
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
