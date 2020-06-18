@@ -2,11 +2,15 @@ package com.example.littlebrotherandroid;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.example.littlebrotherandroid.model.RestString;
 import com.example.littlebrotherandroid.rest.Rest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import okio.BufferedSink;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,17 +39,17 @@ public class Auth {
                 return;
             }
             fcmKey = task.getResult().getToken();
-            Call<Boolean>call = Rest.getInstance().fcm.sendToken(Auth.getInstance().firebaseKey, fcmKey);
-            call.enqueue(new Callback<Boolean>() {
+            Call<String> call = Rest.getInstance().fcm.sendToken("Bearer " + firebaseKey, fcmKey);
+            call.enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                public void onResponse(@NonNull Call<String> call,@NonNull Response<String> response) {
+                    Log.i("code", "str" + response.code());
                     Log.i("response rest ok", response.message());
-
                 }
 
                 @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.i("response rest error", t.getMessage());
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    Log.i("response rest error", call.request().toString());
                 }
             });
             Log.d("fcm_token", fcmKey);
