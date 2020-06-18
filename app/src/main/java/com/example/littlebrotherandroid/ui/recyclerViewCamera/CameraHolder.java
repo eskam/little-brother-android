@@ -28,9 +28,9 @@ public class CameraHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(CameraModel cameraModel){
-        name_camera.setText(cameraModel.nameCamera);
-        little_brother.setText(cameraModel.littleBrother);
-        big_brothers.setText(cameraModel.bigBrother);
+        name_camera.setText(cameraModel.getName());
+        little_brother.setText(cameraModel.getLittleBrother());
+        big_brothers.setText(cameraModel.getBigBrother());
     }
 
 }
