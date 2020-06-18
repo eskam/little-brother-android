@@ -18,16 +18,16 @@
         tools:layout="@layout/sign_up_fragment" />
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.littlebrotherandroid.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_little_brothers"
+        android:name="com.example.littlebrotherandroid.ui.littleBrothers.LittleBrothersFragment"
+        android:label="@string/menu_little_brothers"
+        tools:layout="@layout/fragment_little_brothers" />
 
     <fragment
-        android:id="@+id/nav_camera"
-        android:name="com.example.littlebrotherandroid.ui.camera.CameraFragment"
-        android:label="@string/menu_camera"
-        tools:layout="@layout/fragment_camera" />
+        android:id="@+id/nav_big_brothers"
+        android:name="com.example.littlebrotherandroid.ui.bigBrothers.BigBrothersFragment"
+        android:label="@string/menu_big_brothers"
+        tools:layout="@layout/fragment_big_brothers" />
 
     <fragment
         android:id="@+id/nav_add_camera"
