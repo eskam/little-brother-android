@@ -34,4 +34,10 @@
         android:name="com.example.littlebrotherandroid.ui.addcamera.AddCameraFragment"
         android:label="@string/menu_add_camera"
         tools:layout="@layout/add_camera_fragment"/>
+
+    <fragment
+        android:id="@+id/nav_log_out"
+        android:name="com.example.littlebrotherandroid.ui.logout.LogOutFragment"
+        android:label="@string/menu_log_out"
+        tools:layout="@layout/log_out_fragment"/>
 </navigation>
