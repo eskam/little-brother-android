@@ -59,7 +59,16 @@ public class SignInFragment extends Fragment {
                 Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_sign_up);
             }
         });
+
+        testConnection();
+
         return root;
+    }
+
+    public void testConnection() {
+        if (mAuth.getCurrentUser() != null) {
+            Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_home);
+        }
     }
 
     public void login() {
