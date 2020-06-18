@@ -38,7 +38,8 @@ public class SignInFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         signViewModel = ViewModelProviders.of(this).get(SignInViewModel.class);
         View root = inflater.inflate(R.layout.sign_in_fragment, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
         mAuth = FirebaseAuth.getInstance();
 
         edit_text_email = root.findViewById(R.id.edit_text_email);

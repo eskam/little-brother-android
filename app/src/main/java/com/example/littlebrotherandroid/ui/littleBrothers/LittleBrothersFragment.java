@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,9 @@ public class LittleBrothersFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
                 ViewModelProviders.of(this).get(LittleBrothersViewModel.class);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+
         View root = inflater.inflate(R.layout.fragment_little_brothers, container, false);
 
 
@@ -33,9 +37,9 @@ public class LittleBrothersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         List<CameraModel> cameraModelList = new ArrayList<CameraModel>();
-        cameraModelList.add(new CameraModel("Ecole","Jean","Alfred"));
-        cameraModelList.add(new CameraModel("Gymnase","Corentin","Alfred"));
-        cameraModelList.add(new CameraModel("Dijon","Dealer","Tchetchen"));
+        cameraModelList.add(new CameraModel("Ecole","Jean","Alfred",1.0,2.,3.0));
+        cameraModelList.add(new CameraModel("Gymnase","Corentin","Alfred",1.0,2.,3.0));
+        cameraModelList.add(new CameraModel("Dijon","Dealer","Tchetchen",1.0,2.,3.0));
 
         recyclerView.setAdapter(new CameraAdapter(cameraModelList));
 

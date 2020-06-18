@@ -14,6 +14,18 @@ public class CameraModel{
     @SerializedName("bigBrother")
     @Expose
     private String bigBrother;
+    @SerializedName("latitude")
+    @Expose
+    private Double latitude;
+    @SerializedName("longitude")
+    @Expose
+    private Double longitude;
+    @SerializedName("radius")
+    @Expose
+    private Double radius;
+
+
+
 
     /**
      * No args constructor for use in serialization
@@ -21,20 +33,23 @@ public class CameraModel{
      */
     public CameraModel() {
     }
-
     /**
      *
      * @param name
      * @param littleBrother
      * @param bigBrother
+     * @param latitude
+     * @param longitude
+     * @param radius
      */
-    public CameraModel(String name, String littleBrother, String bigBrother) {
-        super();
+    public CameraModel(String name, String littleBrother, String bigBrother, Double latitude, Double longitude, Double radius) {
         this.name = name;
         this.littleBrother = littleBrother;
         this.bigBrother = bigBrother;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.radius = radius;
     }
-
     public String getName() {
         return name;
     }
@@ -59,4 +74,27 @@ public class CameraModel{
         this.bigBrother = bigBrother;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(Double radius) {
+        this.radius = radius;
+    }
 }

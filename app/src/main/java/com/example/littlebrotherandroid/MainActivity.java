@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         NavigationView navigationView = findViewById(R.id.nav_view);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_sign_in, R.id.nav_sign_up, R.id.little_brother, R.id.big_brother)
+                R.id.nav_little_brothers, R.id.nav_big_brothers)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

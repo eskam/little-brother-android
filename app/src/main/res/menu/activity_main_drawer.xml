@@ -12,9 +12,5 @@
             android:id="@+id/nav_big_brothers"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_big_brothers" />
-        <item
-            android:id="@+id/nav_log_out"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_log_out" />
     </group>
 </menu>
