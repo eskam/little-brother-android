@@ -67,7 +67,8 @@ public class SignInFragment extends Fragment {
 
     public void testConnection() {
         if (mAuth.getCurrentUser() != null) {
-            Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_home);
+            Auth.getInstance().getToken( () ->
+                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_home));
         }
     }
 

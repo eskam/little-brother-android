@@ -59,24 +59,7 @@ public class AddCameraFragment extends Fragment {
     }
 
     public boolean addCamera() {
-        boolean statusRequest=true;
-        Log.i("AddCameraFragment", nameCamera.getText().toString().trim() + "FirebaseToken" + littleBrother.getText().toString().trim());
-        CameraModel camera= new CameraModel(new RestString(nameCamera.getText().toString().trim()),new RestString("FirebaseToken"), new RestString(littleBrother.getText().toString().trim()));
-        Call<Boolean> call = Rest.getInstance().scr.sendCamera(Auth.getInstance().firebaseKey,camera);
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                Log.i("response rest ok", response.message());
-            }
-
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.i("response rest error", "error!!!!!");
-                //statusRequest=false;
-            }
-        });
-
-        return statusRequest;
+        return true;
     }
 
 }

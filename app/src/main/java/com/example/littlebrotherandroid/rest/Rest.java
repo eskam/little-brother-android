@@ -1,19 +1,21 @@
 package com.example.littlebrotherandroid.rest;
 
+import com.example.littlebrotherandroid.model.CameraModel;
+
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Rest {
     public FcmRest fcm;
-    public SendCameraRest scr;
+    public CameraRest cameraRest;
     private Rest(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://europe-west1-little-brother-55371.cloudfunctions.net/")
-                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
+        cameraRest = retrofit.create(CameraRest.class);
         fcm = retrofit.create(FcmRest.class);
-        scr = retrofit.create(SendCameraRest.class);
     }
     private static Rest instance = new Rest();
     public static Rest getInstance(){
