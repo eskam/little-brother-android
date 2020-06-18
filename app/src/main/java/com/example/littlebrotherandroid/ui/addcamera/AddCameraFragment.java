@@ -21,7 +21,11 @@ import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.model.RestString;
 import com.example.littlebrotherandroid.rest.Rest;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +63,28 @@ public class AddCameraFragment extends Fragment {
     }
 
     public boolean addCamera() {
-        return true;
+        boolean statusRequest=true;
+        Log.i("AddCameraFragment", nameCamera.getText().toString().trim() + "FirebaseToken" + littleBrother.getText().toString().trim());
+        CameraModel camera= new CameraModel(nameCamera.getText().toString().trim(),littleBrother.getText().toString().trim(), FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer "+Auth.getInstance().firebaseKey,camera);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.i("response rest ok", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.w("response rest error", "error!!!!!",t);
+                //statusRequest=false;
+            }
+        });
+
+        return statusRequest;
     }
 
 }
