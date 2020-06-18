@@ -80,7 +80,7 @@ public class SignUpFragment extends Fragment {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d(TAG, "createUserWithEmail:success");
                 Auth.getInstance().getToken(() ->
-                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_home)
+                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_little_brothers)
                 );
             } else {
                 // If sign in fails, display a message to the user.
