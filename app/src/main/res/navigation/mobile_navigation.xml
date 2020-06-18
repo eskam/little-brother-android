@@ -28,4 +28,10 @@
         android:name="com.example.littlebrotherandroid.ui.bigBrothers.BigBrothersFragment"
         android:label="@string/menu_big_brothers"
         tools:layout="@layout/fragment_big_brothers" />
+
+    <fragment
+        android:id="@+id/nav_add_camera"
+        android:name="com.example.littlebrotherandroid.ui.addcamera.AddCameraFragment"
+        android:label="@string/menu_add_camera"
+        tools:layout="@layout/add_camera_fragment"/>
 </navigation>

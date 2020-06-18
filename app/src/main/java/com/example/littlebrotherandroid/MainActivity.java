@@ -2,6 +2,9 @@ package com.example.littlebrotherandroid;
 
 import android.os.Bundle;
 import android.view.Menu;
+
+import com.example.littlebrotherandroid.model.CameraModel;
+import com.example.littlebrotherandroid.rest.Rest;
 import com.google.android.material.navigation.NavigationView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;

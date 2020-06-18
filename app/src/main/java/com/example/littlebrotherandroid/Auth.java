@@ -2,11 +2,22 @@ package com.example.littlebrotherandroid;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.example.littlebrotherandroid.model.CameraModel;
+import com.example.littlebrotherandroid.model.RestString;
 import com.example.littlebrotherandroid.rest.Rest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.BufferedSink;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,16 +46,20 @@ public class Auth {
                 return;
             }
             fcmKey = task.getResult().getToken();
-            Call<Boolean>call = Rest.getInstance().fcm.sendToken(Auth.getInstance().firebaseKey, fcmKey);
-            call.enqueue(new Callback<Boolean>() {
+            RequestBody body = RequestBody.create(MediaType.parse("text/plain"), fcmKey);
+            Call<ResponseBody> call = Rest.getInstance().fcm.sendToken("Bearer " + firebaseKey, body);
+            call.enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    Log.i("response rest ok", response.message());
-
+                public void onResponse(@NonNull Call<ResponseBody> call,@NonNull Response<ResponseBody> response) {
+                    try {
+                        Log.i("response rest ok", response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                     Log.i("response rest error", t.getMessage());
                 }
             });
