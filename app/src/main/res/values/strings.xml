@@ -15,6 +15,7 @@
     <string name="menu_sign_up">Sign Up</string>
     <string name="menu_camera">Camera</string>
     <string name="menu_add_camera">Ajouter Camera</string>
+    <string name="menu_map">Map</string>
 
     <string name="already_registered">already registered</string>
     <string name="create_account">create account</string>
@@ -22,4 +23,8 @@
     <string name="button_signin">sign in</string>
     <string name="button_signup">Sign Up</string>
     <string name="button_add_camera">Ajouter une caméra</string>
+
+    <string name="text_btn_map">Adresse, ville, code postal</string>
+    <string name="cle_api">AIzaSyC1t9ck8g-PpS2CL3LPNWXeR_T3BFTJH_k</string>
+
 </resources>

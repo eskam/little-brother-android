@@ -40,4 +40,10 @@
         android:name="com.example.littlebrotherandroid.ui.logout.LogOutFragment"
         android:label="@string/menu_log_out"
         tools:layout="@layout/log_out_fragment"/>
+
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.example.littlebrotherandroid.ui.map.Map"
+        android:label="@string/menu_map"
+        tools:layout="@layout/map" />
 </navigation>
