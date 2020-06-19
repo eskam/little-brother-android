@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.littlebrotherandroid.Auth;
 import com.example.littlebrotherandroid.R;
@@ -64,8 +65,14 @@ public class AddCameraFragment extends Fragment {
 
     public boolean addCamera() {
         boolean statusRequest=true;
-        Log.i("AddCameraFragment", nameCamera.getText().toString().trim() + "FirebaseToken" + littleBrother.getText().toString().trim());
-        CameraModel camera= new CameraModel(nameCamera.getText().toString().trim(),littleBrother.getText().toString().trim(), FirebaseAuth.getInstance().getCurrentUser().getEmail(),1.0,2.0,3.0);
+        String name = nameCamera.getText().toString().trim();
+        String little = littleBrother.getText().toString().trim();
+        String big = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        if (name.isEmpty() || little.isEmpty()) {
+            Toast.makeText(getActivity(), "Veuillez remplir les champs", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        CameraModel camera= new CameraModel(name,little, big,1.0,2.0,3.0);
         Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer "+Auth.getInstance().firebaseKey,camera);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
