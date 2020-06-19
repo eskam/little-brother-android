@@ -1,7 +1,12 @@
 package com.example.littlebrotherandroid.ui.addcamera;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +27,17 @@ import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.model.RestString;
 import com.example.littlebrotherandroid.rest.Rest;
+import com.example.littlebrotherandroid.ui.map.MyMap;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
@@ -33,6 +49,10 @@ import retrofit2.Response;
 
 public class AddCameraFragment extends Fragment {
 
+    MapView mMapView;
+
+    private GoogleMap googleMap;
+    private SupportMapFragment fragment;
     private AddCameraViewModel mViewModel;
 
     private EditText littleBrother;
@@ -56,12 +76,34 @@ public class AddCameraFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (addCamera())
-                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_little_brothers);
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_little_brothers);
             }
         });
+        mMapView = root.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
 
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+                LatLng sydney = new LatLng(-34, 151);
+                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+
+                // For zooming automatically to the location of the marker
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
+                mMapView.onResume();
+            }
+        });
+        fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         return root;
     }
+
+
 
     public boolean addCamera() {
         boolean statusRequest=true;
@@ -93,5 +135,6 @@ public class AddCameraFragment extends Fragment {
 
         return statusRequest;
     }
+
 
 }

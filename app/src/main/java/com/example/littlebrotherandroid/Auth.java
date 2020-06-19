@@ -61,23 +61,6 @@ public class Auth {
                 }
             });
             Log.d("fcm_token", fcmKey);
-            Call<ResponseBody> call2 = Rest.getInstance().cameraRest.send("Bearer "+ firebaseKey,  new CameraModel("nom", "petit", "grand", 1.0, 2.0, 3.0));
-            call2.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
-                        Log.i("resp cam", response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                }
-            });
-
             action.then();
         });
     }
