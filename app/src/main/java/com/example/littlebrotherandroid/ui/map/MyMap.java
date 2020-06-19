@@ -40,8 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Map extends AppCompatActivity implements OnMapReadyCallback,
-        GoogleMap.OnMarkerDragListener {
+public class MyMap extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -122,7 +121,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
 
         String searchString = mSearchText.getText().toString();
 
-        Geocoder geocoder = new Geocoder(Map.this);
+        Geocoder geocoder = new Geocoder(MyMap.this);
         List<Address> list = new ArrayList<>();
         try {
             list = geocoder.getFromLocationName(searchString, 1);
@@ -162,7 +161,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
-                            Toast.makeText(Map.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyMap.this, "unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -207,7 +206,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
             // Get back the mutable Circle
             mMap.addCircle(circleOptions);
         }
-        Toast.makeText(Map.this, "latLng" + latLng, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MyMap.this, "latLng" + latLng, Toast.LENGTH_SHORT).show();
 
         hideSoftKeyboard();
     }
@@ -216,7 +215,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(Map.this);
+        mapFragment.getMapAsync(MyMap.this);
     }
 
     private void getLocationPermission() {
@@ -287,7 +286,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
         latitude = marker.getPosition().latitude;
         longitude = marker.getPosition().longitude;
 
-        Toast.makeText(Map.this, "latitude" + latitude + "longitude" + longitude, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MyMap.this, "latitude" + latitude + "longitude" + longitude, Toast.LENGTH_SHORT).show();
 
         mMap.clear();
         //Moving the map

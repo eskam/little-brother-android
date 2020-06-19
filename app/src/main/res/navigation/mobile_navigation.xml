@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/nav_map"
-        android:name="com.example.littlebrotherandroid.ui.map.Map"
+        android:name="com.example.littlebrotherandroid.ui.map.MyMap"
         android:label="@string/menu_map"
         tools:layout="@layout/map" />
 </navigation>
