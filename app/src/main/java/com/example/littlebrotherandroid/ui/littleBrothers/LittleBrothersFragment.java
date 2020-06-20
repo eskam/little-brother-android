@@ -57,4 +57,10 @@ public class LittleBrothersFragment extends Fragment {
 
         return root;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        CameraList.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
+
+    }
 }
