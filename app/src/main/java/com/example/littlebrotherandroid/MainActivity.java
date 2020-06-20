@@ -9,8 +9,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 
-
-import com.google.android.gms.location.LocationListener;
+import com.example.littlebrotherandroid.model.CameraModel;
+import com.example.littlebrotherandroid.rest.Rest;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.core.app.ActivityCompat;
