@@ -62,6 +62,8 @@ public class AddCameraFragment extends Fragment {
 
     MapView mMapView;
 
+    private CameraModel cameraModel = new CameraModel();
+
     private GoogleMap googleMap;
     private SupportMapFragment fragment;
     private AddCameraViewModel mViewModel;
@@ -261,7 +263,9 @@ public class AddCameraFragment extends Fragment {
             googleMap.addCircle(circleOptions);
         }
         Toast.makeText(getActivity(), "latLng" + latLng, Toast.LENGTH_SHORT).show();
-
+        cameraModel.setLatitude(latLng.latitude);
+        cameraModel.setLongitude(latLng.longitude);
+        cameraModel.setRadius(30.0);
         hideSoftKeyboard();
     }
 
@@ -326,8 +330,10 @@ public class AddCameraFragment extends Fragment {
             Toast.makeText(getActivity(), "Veuillez remplir les champs", Toast.LENGTH_LONG).show();
             return false;
         }
-        CameraModel camera = new CameraModel(name, little, big, 1.0, 2.0, 3.0);
-        Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer " + Auth.getInstance().firebaseKey, camera);
+        cameraModel.setName(name);
+        cameraModel.setBigBrother(big);
+        cameraModel.setLittleBrother(little);
+        Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer " + Auth.getInstance().firebaseKey, cameraModel);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

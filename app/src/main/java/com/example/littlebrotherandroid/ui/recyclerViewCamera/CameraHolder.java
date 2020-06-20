@@ -1,5 +1,6 @@
 package com.example.littlebrotherandroid.ui.recyclerViewCamera;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,7 +12,13 @@ import com.example.littlebrotherandroid.Auth;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class CameraHolder extends RecyclerView.ViewHolder {
@@ -24,6 +31,7 @@ public class CameraHolder extends RecyclerView.ViewHolder {
     public Button accepter;
     public Button refuser;
     public MapView minimap;
+    public GoogleMap gmap;
 
 
     public CameraHolder(@NonNull View itemView) {
@@ -44,6 +52,19 @@ public class CameraHolder extends RecyclerView.ViewHolder {
 
         refuser.setOnClickListener(e ->
                 Rest.getInstance().cameraRest.delete("Bearer" + Auth.getInstance().firebaseKey, cameraModel.getId()));
-    }
+        minimap.onCreate(new Bundle());
+        minimap.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                gmap = mMap;
 
+                LatLng marker = new LatLng(cameraModel.getLatitude(), cameraModel.getLongitude());
+                gmap.addMarker(new MarkerOptions().position(marker).title(cameraModel.getName()).snippet("Marker Description"));
+
+                // For zooming automatically to the location of the marker
+                gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15));
+                minimap.onResume();
+            }
+        });
+    }
 }
