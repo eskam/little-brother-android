@@ -44,6 +44,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,6 +71,7 @@ public class AddCameraFragment extends Fragment {
 
     private EditText littleBrother;
     private EditText nameCamera;
+    private EditText radius;
 
     private static final String TAG = "AddCameraFragment";
 
@@ -105,6 +107,7 @@ public class AddCameraFragment extends Fragment {
 
         littleBrother = root.findViewById(R.id.edittext_littlebrother_mail);
         nameCamera = root.findViewById(R.id.edittext_name_camera);
+        radius = root.findViewById(R.id.edittext_radius);
 
         Button buttonAddCamera = root.findViewById(R.id.button_add_camera);
         buttonAddCamera.setOnClickListener(new View.OnClickListener() {
@@ -130,13 +133,7 @@ public class AddCameraFragment extends Fragment {
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
-                //LatLng sydney = new LatLng(-34, 151);
-                //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
                 mMapView.onResume();
-
 
                 if (mLocationPermissionsGranted) {
                     getDeviceLocation();
@@ -151,12 +148,8 @@ public class AddCameraFragment extends Fragment {
 
                     init();
                 }
-
             }
-
         });
-        //fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
         return root;
     }
 
@@ -258,14 +251,14 @@ public class AddCameraFragment extends Fragment {
             // Cercle
             CircleOptions circleOptions = new CircleOptions()
                     .center(latLng)
-                    .radius(30); // In meters
+                    .radius(Double.parseDouble(radius.getText().toString())); // In meters
             // Get back the mutable Circle
             googleMap.addCircle(circleOptions);
         }
         Toast.makeText(getActivity(), "latLng" + latLng, Toast.LENGTH_SHORT).show();
         cameraModel.setLatitude(latLng.latitude);
         cameraModel.setLongitude(latLng.longitude);
-        cameraModel.setRadius(30.0);
+        cameraModel.setLittleBrother("30");
         hideSoftKeyboard();
     }
 
@@ -326,6 +319,8 @@ public class AddCameraFragment extends Fragment {
         String name = nameCamera.getText().toString().trim();
         String little = littleBrother.getText().toString().trim();
         String big = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        double rad = Double.parseDouble(radius.getText().toString().trim());
+
         if (name.isEmpty() || little.isEmpty()) {
             Toast.makeText(getActivity(), "Veuillez remplir les champs", Toast.LENGTH_LONG).show();
             return false;
@@ -333,6 +328,8 @@ public class AddCameraFragment extends Fragment {
         cameraModel.setName(name);
         cameraModel.setBigBrother(big);
         cameraModel.setLittleBrother(little);
+        //cameraModel.setLittleBrother(rad);
+
         Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer " + Auth.getInstance().firebaseKey, cameraModel);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
