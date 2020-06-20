@@ -1,14 +1,9 @@
 package com.example.littlebrotherandroid.ui.littleBrothers;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,13 +13,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.littlebrotherandroid.MainActivity;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
-import com.example.littlebrotherandroid.ui.map.Map;
 import com.example.littlebrotherandroid.ui.recyclerViewCamera.CameraAdapter;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
