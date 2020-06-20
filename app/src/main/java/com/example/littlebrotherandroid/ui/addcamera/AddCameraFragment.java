@@ -59,7 +59,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCameraFragment extends Fragment {
+public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDragListener {
 
     MapView mMapView;
 
@@ -133,6 +133,7 @@ public class AddCameraFragment extends Fragment {
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
+                googleMap.clear();
                 mMapView.onResume();
 
                 if (mLocationPermissionsGranted) {
@@ -247,7 +248,7 @@ public class AddCameraFragment extends Fragment {
                     .position(latLng)
                     .title(title);
             googleMap.addMarker(markerOptions);
-            //googleMap.setOnMarkerDragListener(this);
+            googleMap.setOnMarkerDragListener(this);
             // Cercle
             CircleOptions circleOptions = new CircleOptions()
                     .center(latLng)
@@ -355,4 +356,42 @@ public class AddCameraFragment extends Fragment {
     }
 
 
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+//final LatLng latLng = new LatLng(latitude = marker.getPosition().latitude, longitude = marker.getPosition().longitude);
+        latitude = marker.getPosition().latitude;
+        longitude = marker.getPosition().longitude;
+
+        Toast.makeText(getActivity(), "latitude" + latitude + "longitude" + longitude, Toast.LENGTH_SHORT).show();
+
+        googleMap.clear();
+        //Moving the map
+        moveCamera(new LatLng(latitude, longitude), DEFAULT_ZOOM, "My Location");
+
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .draggable(true)
+                .position(new LatLng(latitude, longitude))
+                .title(title);
+        googleMap.addMarker(markerOptions);
+
+        // Cercle
+        CircleOptions circleOptions = new CircleOptions()
+                .center(new LatLng(latitude, longitude))
+                .radius(30); // In meters
+        // Get back the mutable Circle
+        googleMap.addCircle(circleOptions);
+
+        hideSoftKeyboard();
+    }
 }
