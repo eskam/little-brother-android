@@ -8,6 +8,12 @@ public class CameraModel{
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("littleBrotherId")
+    @Expose
+    private String littleBrotherId;
+    @SerializedName("bigBrotherId")
+    @Expose
+    private String bigBrotherId;
     @SerializedName("littleBrother")
     @Expose
     private String littleBrother;
@@ -23,6 +29,12 @@ public class CameraModel{
     @SerializedName("radius")
     @Expose
     private Double radius;
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("accept")
+    @Expose
+    private Boolean accept;
 
 
 
@@ -49,7 +61,25 @@ public class CameraModel{
         this.latitude = latitude;
         this.longitude = longitude;
         this.radius = radius;
+        this.littleBrotherId = null;
+        this.bigBrotherId = null;
+        this.id = null;
+        this.accept = false;
     }
+
+    public CameraModel(String name, String littleBrother, String bigBrother, String littleBrotherId, String bigBrotherId, Double latitude, Double longitude, Double radius, String id, Boolean accept) {
+        this.name = name;
+        this.littleBrother = littleBrother;
+        this.bigBrother = bigBrother;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.radius = radius;
+        this.id = id;
+        this.accept = accept;
+        this.littleBrotherId = littleBrotherId;
+        this.bigBrotherId = bigBrotherId;
+    }
+
     public String getName() {
         return name;
     }
@@ -96,5 +126,37 @@ public class CameraModel{
 
     public void setRadius(Double radius) {
         this.radius = radius;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Boolean getAccept() {
+        return accept;
+    }
+
+    public void setAccept(Boolean accept) {
+        this.accept = accept;
+    }
+
+    public String getBigBrotherId() {
+        return bigBrotherId;
+    }
+
+    public void setBigBrotherId(String bigBrotherId) {
+        this.bigBrotherId = bigBrotherId;
+    }
+
+    public String getLittleBrotherId() {
+        return littleBrotherId;
+    }
+
+    public void setLittleBrotherId(String littleBrotherId) {
+        this.littleBrotherId = littleBrotherId;
     }
 }

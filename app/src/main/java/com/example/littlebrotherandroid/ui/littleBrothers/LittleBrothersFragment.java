@@ -1,11 +1,13 @@
 package com.example.littlebrotherandroid.ui.littleBrothers;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.littlebrotherandroid.CameraList;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.ui.recyclerViewCamera.CameraAdapter;
@@ -24,6 +27,7 @@ import java.util.List;
 public class LittleBrothersFragment extends Fragment {
 
     private LittleBrothersViewModel galleryViewModel;
+    private CameraAdapter cameraAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,12 +42,9 @@ public class LittleBrothersFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<CameraModel> cameraModelList = new ArrayList<CameraModel>();
-        cameraModelList.add(new CameraModel("Ecole","Jean","Alfred",1.0,2.,3.0));
-        cameraModelList.add(new CameraModel("Gymnase","Corentin","Alfred",1.0,2.,3.0));
-        cameraModelList.add(new CameraModel("Dijon","Dealer","Tchetchen",1.0,2.,3.0));
 
-        recyclerView.setAdapter(new CameraAdapter(cameraModelList));
+        cameraAdapter = new CameraAdapter(CameraList.getInstance().litBro);
+        recyclerView.setAdapter(cameraAdapter);
 
         FloatingActionButton fab_add_camera = root.findViewById(R.id.fab_add_camera);
         fab_add_camera.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,7 @@ public class LittleBrothersFragment extends Fragment {
                 Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_add_camera);
             }
         });
+        CameraList.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
 
         return root;
     }

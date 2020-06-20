@@ -52,7 +52,6 @@ public class AddCameraFragment extends Fragment {
     MapView mMapView;
 
     private GoogleMap googleMap;
-    private SupportMapFragment fragment;
     private AddCameraViewModel mViewModel;
 
     private EditText littleBrother;
@@ -99,7 +98,6 @@ public class AddCameraFragment extends Fragment {
                 mMapView.onResume();
             }
         });
-        fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         return root;
     }
 
@@ -120,7 +118,10 @@ public class AddCameraFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    Log.i("response rest ok", response.body().string());
+                    if (response.body() != null)
+                        Log.i("response rest ok", response.body().string());
+                    else
+                        Log.i("response rest ", response.message());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

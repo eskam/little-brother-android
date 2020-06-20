@@ -22,19 +22,47 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Little Brother"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/name_camera"
+        app:layout_constraintTop_toBottomOf="@+id/big_brother" />
 
     <TextView
         android:id="@+id/big_brother"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:text="Big Brother"
+        app:layout_constraintStart_toStartOf="@+id/name_camera"
+        app:layout_constraintTop_toBottomOf="@+id/name_camera" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/minimap"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/denied"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/denied"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="accepter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/little_brother" />
+
+    <Button
+        android:id="@+id/denied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="refuser"
+        app:layout_constraintStart_toEndOf="@+id/accept"
+        app:layout_constraintTop_toTopOf="@+id/accept" />
 </androidx.constraintlayout.widget.ConstraintLayout>
