@@ -30,9 +30,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import com.example.littlebrotherandroid.Auth;
+import com.example.littlebrotherandroid.CameraList;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
+import com.example.littlebrotherandroid.ui.recyclerViewCamera.CameraAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -250,11 +252,11 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
             googleMap.addMarker(markerOptions);
             googleMap.setOnMarkerDragListener(this);
             // Cercle
-            CircleOptions circleOptions = new CircleOptions()
-                    .center(latLng)
-                    .radius(Double.parseDouble(radius.getText().toString())); // In meters
+            //CircleOptions circleOptions = new CircleOptions()
+                    //.center(latLng)
+                    //.radius(Double.parseDouble(radius.getText().toString())); // In meters
             // Get back the mutable Circle
-            googleMap.addCircle(circleOptions);
+            //googleMap.addCircle(circleOptions);
         }
         Toast.makeText(getActivity(), "latLng" + latLng, Toast.LENGTH_SHORT).show();
         cameraModel.setLatitude(latLng.latitude);
@@ -329,15 +331,16 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         cameraModel.setName(name);
         cameraModel.setBigBrother(big);
         cameraModel.setLittleBrother(little);
-        //cameraModel.setLittleBrother(rad);
+        cameraModel.setRadius(rad);
 
         Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer " + Auth.getInstance().firebaseKey, cameraModel);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    if (response.body() != null)
+                    if (response.body() != null) {
                         Log.i("response rest ok", response.body().string());
+                    }
                     else
                         Log.i("response rest ", response.message());
                 } catch (IOException e) {
@@ -368,7 +371,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-//final LatLng latLng = new LatLng(latitude = marker.getPosition().latitude, longitude = marker.getPosition().longitude);
+            //final LatLng latLng = new LatLng(latitude = marker.getPosition().latitude, longitude = marker.getPosition().longitude);
         latitude = marker.getPosition().latitude;
         longitude = marker.getPosition().longitude;
 

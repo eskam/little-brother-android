@@ -15,10 +15,11 @@ import java.util.List;
 public class CameraAdapter extends RecyclerView.Adapter<CameraHolder> {
 
     private List<CameraModel> cameraModels;
-    public CameraAdapter(List<CameraModel> cameraModels){
+    public boolean showAccept;
+    public CameraAdapter(List<CameraModel> cameraModels, boolean showAccept){
 
         this.cameraModels=cameraModels;
-
+        this.showAccept = showAccept;
     }
 
     @NonNull
@@ -31,7 +32,7 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CameraHolder holder, int position) {
-        holder.bind(cameraModels.get(position));
+        holder.bind(cameraModels.get(position), this);
     }
 
 
