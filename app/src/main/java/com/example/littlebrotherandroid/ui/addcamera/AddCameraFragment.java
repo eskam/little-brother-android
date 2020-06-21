@@ -350,7 +350,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-
+        googleMap.clear();
     }
 
     @Override
