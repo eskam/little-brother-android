@@ -125,9 +125,6 @@ public class CameraList {
         if (cam1.getLongitude().equals(cam2.getLongitude())){
             result = true;
         }
-        if (cam1.getRadius().equals(cam2.getRadius())){
-            result = true;
-        }
         return result;
     }
 }

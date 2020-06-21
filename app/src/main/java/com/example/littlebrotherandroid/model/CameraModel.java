@@ -26,9 +26,6 @@ public class CameraModel{
     @SerializedName("longitude")
     @Expose
     private Double longitude;
-    @SerializedName("radius")
-    @Expose
-    private Double radius;
     @SerializedName("id")
     @Expose
     private String id;
@@ -52,28 +49,25 @@ public class CameraModel{
      * @param bigBrother
      * @param latitude
      * @param longitude
-     * @param radius
      */
-    public CameraModel(String name, String littleBrother, String bigBrother, Double latitude, Double longitude, Double radius) {
+    public CameraModel(String name, String littleBrother, String bigBrother, Double latitude, Double longitude) {
         this.name = name;
         this.littleBrother = littleBrother;
         this.bigBrother = bigBrother;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.radius = radius;
         this.littleBrotherId = null;
         this.bigBrotherId = null;
         this.id = null;
         this.accept = false;
     }
 
-    public CameraModel(String name, String littleBrother, String bigBrother, String littleBrotherId, String bigBrotherId, Double latitude, Double longitude, Double radius, String id, Boolean accept) {
+    public CameraModel(String name, String littleBrother, String bigBrother, String littleBrotherId, String bigBrotherId, Double latitude, Double longitude, String id, Boolean accept) {
         this.name = name;
         this.littleBrother = littleBrother;
         this.bigBrother = bigBrother;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.radius = radius;
         this.id = id;
         this.accept = accept;
         this.littleBrotherId = littleBrotherId;
@@ -118,14 +112,6 @@ public class CameraModel{
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
-    }
-
-    public Double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(Double radius) {
-        this.radius = radius;
     }
 
     public String getId() {

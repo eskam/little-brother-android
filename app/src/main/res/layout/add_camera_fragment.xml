@@ -67,14 +67,6 @@
                 android:textColor="#000"
                 android:textSize="15sp" />
         </RelativeLayout>
-
-        <EditText
-            android:id="@+id/edittext_radius"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:hint="30"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/white_border"/>
     </RelativeLayout>
 
     <EditText
