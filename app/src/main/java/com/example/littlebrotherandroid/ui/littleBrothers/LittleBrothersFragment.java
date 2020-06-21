@@ -37,7 +37,7 @@ public class LittleBrothersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        cameraAdapter = new CameraAdapter(CameraList.getInstance().litBro);
+        cameraAdapter = new CameraAdapter(CameraList.getInstance().litBro, true);
         recyclerView.setAdapter(cameraAdapter);
 
         FloatingActionButton fab_add_camera = root.findViewById(R.id.fab_add_camera);
@@ -54,6 +54,12 @@ public class LittleBrothersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        CameraList.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
         CameraList.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
     }
 }

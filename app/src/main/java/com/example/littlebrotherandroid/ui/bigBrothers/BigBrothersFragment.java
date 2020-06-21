@@ -33,7 +33,7 @@ public class BigBrothersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        cameraAdapter = new CameraAdapter(CameraList.getInstance().bigBro);
+        cameraAdapter = new CameraAdapter(CameraList.getInstance().bigBro, false);
         recyclerView.setAdapter(cameraAdapter);
 
         CameraList.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
@@ -44,6 +44,14 @@ public class BigBrothersFragment extends Fragment {
     public void onResume() {
         super.onResume();
         CameraList.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden)
+            CameraList.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
 
     }
 }
