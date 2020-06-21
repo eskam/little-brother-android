@@ -33,7 +33,7 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="593dp" />
+            android:layout_height="match_parent" />
 
 
         <RelativeLayout
@@ -70,9 +70,9 @@
 
         <EditText
             android:id="@+id/edittext_radius"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:hint="Radius"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:hint="30"
             android:layout_alignParentBottom="true"
             android:background="@drawable/white_border"/>
     </RelativeLayout>

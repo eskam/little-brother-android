@@ -1,13 +1,11 @@
 package com.example.littlebrotherandroid.ui.littleBrothers;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -17,12 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.littlebrotherandroid.CameraList;
 import com.example.littlebrotherandroid.R;
-import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.ui.recyclerViewCamera.CameraAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LittleBrothersFragment extends Fragment {
 
@@ -61,6 +55,5 @@ public class LittleBrothersFragment extends Fragment {
     public void onResume() {
         super.onResume();
         CameraList.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
-
     }
 }

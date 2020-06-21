@@ -320,7 +320,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         String name = nameCamera.getText().toString().trim();
         String little = littleBrother.getText().toString().trim();
         String big = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        double rad = Double.parseDouble(radius.getText().toString().trim());
 
         if (name.isEmpty() || little.isEmpty()) {
             Toast.makeText(getActivity(), "Veuillez remplir les champs", Toast.LENGTH_LONG).show();
@@ -329,7 +328,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         cameraModel.setName(name);
         cameraModel.setBigBrother(big);
         cameraModel.setLittleBrother(little);
-        //cameraModel.setLittleBrother(rad);
 
         Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer " + Auth.getInstance().firebaseKey, cameraModel);
         call.enqueue(new Callback<ResponseBody>() {
@@ -388,7 +386,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         // Cercle
         CircleOptions circleOptions = new CircleOptions()
                 .center(new LatLng(latitude, longitude))
-                .radius(30); // In meters
+                .radius(Double.parseDouble(radius.getText().toString())); // In meters
         // Get back the mutable Circle
         googleMap.addCircle(circleOptions);
 
