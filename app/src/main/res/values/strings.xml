@@ -26,5 +26,7 @@
 
     <string name="text_btn_map">Adresse, ville, code postal</string>
     <string name="cle_api">AIzaSyBqr3PwJjBRDcnsf0HmhaAfWaBlFtL2EEg</string>
+    <string name="channel_name">main_channel</string>
+    <string name="channel_description">channel for alert of people getting in zone</string>
 
 </resources>

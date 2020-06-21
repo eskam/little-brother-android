@@ -1,44 +1,30 @@
 package com.example.littlebrotherandroid;
 
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.littlebrotherandroid.model.CameraModel;
-import com.example.littlebrotherandroid.model.RestString;
 import com.example.littlebrotherandroid.rest.Rest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.io.IOException;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import okio.Buffer;
-import okio.BufferedSink;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Auth {
-    private Auth(){}
+public class Auth{
     private static Auth instance = new Auth();
     public static Auth getInstance(){return instance;}
     public String fcmKey = null;
     public String firebaseKey = null;
 
-    private void getFirebaseToken(ActionAfter action) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
-            if (task.isSuccessful())
-                firebaseKey = task.getResult().getToken();
-            Log.i("firebase_token", firebaseKey);
-            getFcmToken(action);
-        });
-    }
     private void getFcmToken(ActionAfter action) {
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task ->  {
             if (!task.isSuccessful()) {
@@ -61,14 +47,30 @@ public class Auth {
                 }
             });
             Log.d("fcm_token", fcmKey);
-            action.then();
+            if (action != null)
+                action.then();
         });
     }
 
     public void getToken(ActionAfter action){
-        getFirebaseToken(action);
+        autoRefresh(action);
     }
     public interface ActionAfter{
         void then();
+    }
+    public void autoRefresh(ActionAfter action){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.addIdTokenListener(new FirebaseAuth.IdTokenListener() {
+            @Override
+            public void onIdTokenChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                        firebaseKey = task.getResult().getToken();
+                    Log.i("firebase_token", firebaseKey);
+                    getFcmToken(action);
+                });
+            }
+        });
     }
 }

@@ -10,5 +10,5 @@ import retrofit2.http.POST;
 public interface LogRest {
 
     @POST("/app/camera/log")
-    Call<ResponseBody> sendLog(@Header("Authorization") String userkey, @Body RequestBody log);
+    Call<ResponseBody> sendLog(@Header("Authorization") String userkey, @Body RequestBody cameraId);
 }

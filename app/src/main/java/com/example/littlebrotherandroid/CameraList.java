@@ -1,6 +1,5 @@
 package com.example.littlebrotherandroid;
 
-import android.location.LocationManager;
 import android.util.Log;
 
 import com.example.littlebrotherandroid.model.CameraModel;
@@ -9,7 +8,6 @@ import com.example.littlebrotherandroid.rest.Rest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +23,7 @@ public class CameraList {
        refreshLittle(null);
     }
     public void refreshBig(Action action) {
-        Call<Map<String, CameraModel>> callBig = Rest.getInstance().cameraRest.getBig("Bearer " + Auth.getInstance().firebaseKey);
+        Call<Map<String, CameraModel>> callBig = Rest.getInstance().camera.getBig("Bearer " + Auth.getInstance().firebaseKey);
 
         callBig.enqueue(new Callback<Map<String, CameraModel>>() {
             @Override
@@ -49,7 +47,7 @@ public class CameraList {
         });
     }
     public void refreshLittle(Action action){
-        Call<Map<String, CameraModel>> callLittle = Rest.getInstance().cameraRest.getLittle("Bearer " + Auth.getInstance().firebaseKey);
+        Call<Map<String, CameraModel>> callLittle = Rest.getInstance().camera.getLittle("Bearer " + Auth.getInstance().firebaseKey);
 
         callLittle.enqueue(new Callback<Map<String, CameraModel>>() {
             @Override
@@ -123,9 +121,6 @@ public class CameraList {
             result = true;
         }
         if (cam1.getLongitude().equals(cam2.getLongitude())){
-            result = true;
-        }
-        if (cam1.getRadius().equals(cam2.getRadius())){
             result = true;
         }
         return result;

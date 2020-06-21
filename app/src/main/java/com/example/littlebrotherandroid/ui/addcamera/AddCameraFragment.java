@@ -34,7 +34,6 @@ import com.example.littlebrotherandroid.CameraList;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
-import com.example.littlebrotherandroid.ui.recyclerViewCamera.CameraAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -115,8 +114,9 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         buttonAddCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (addCamera())
+                addCamera(() -> {
                     Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_little_brothers);
+                });
             }
         });
         mMapView = root.findViewById(R.id.mapView);
@@ -317,7 +317,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public boolean addCamera() {
+    public void addCamera(CameraList.Action action) {
         boolean statusRequest = true;
         String name = nameCamera.getText().toString().trim();
         String little = littleBrother.getText().toString().trim();
@@ -326,23 +326,24 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
         if (name.isEmpty() || little.isEmpty()) {
             Toast.makeText(getActivity(), "Veuillez remplir les champs", Toast.LENGTH_LONG).show();
-            return false;
         }
         cameraModel.setName(name);
         cameraModel.setBigBrother(big);
         cameraModel.setLittleBrother(little);
-        cameraModel.setRadius(rad);
 
-        Call<ResponseBody> call = Rest.getInstance().cameraRest.send("Bearer " + Auth.getInstance().firebaseKey, cameraModel);
+        Call<ResponseBody> call = Rest.getInstance().camera.send("Bearer " + Auth.getInstance().firebaseKey, cameraModel);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.body() != null) {
                         Log.i("response rest ok", response.body().string());
+                        action.action();
                     }
-                    else
+                    else {
                         Log.i("response rest ", response.message());
+                        Toast.makeText(getActivity(), "error when sending camera", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -351,11 +352,10 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.w("response rest error", "error!!!!!", t);
-                //statusRequest=false;
+                Toast.makeText(getActivity(), "error when sending camera", Toast.LENGTH_SHORT).show();
             }
         });
 
-        return statusRequest;
     }
 
 

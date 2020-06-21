@@ -3,7 +3,6 @@ package com.example.littlebrotherandroid.ui.recyclerViewCamera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,7 +17,6 @@ import com.example.littlebrotherandroid.rest.Rest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -64,7 +62,7 @@ public class CameraHolder extends RecyclerView.ViewHolder {
             accepter.setVisibility(View.GONE);
 
         refuser.setOnClickListener(e ->{
-            Call<ResponseBody> call = Rest.getInstance().cameraRest.delete("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
+            Call<ResponseBody> call = Rest.getInstance().camera.delete("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -86,7 +84,7 @@ public class CameraHolder extends RecyclerView.ViewHolder {
 
         });
         accepter.setOnClickListener(e ->{
-            Call<ResponseBody> call = Rest.getInstance().cameraRest.accept("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
+            Call<ResponseBody> call = Rest.getInstance().camera.accept("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
             call.enqueue(new Callback<ResponseBody>(){
 
                 @Override
