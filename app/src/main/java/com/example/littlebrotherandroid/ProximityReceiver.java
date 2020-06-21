@@ -36,6 +36,22 @@ public class ProximityReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        String key = LocationManager.KEY_PROXIMITY_ENTERING;
+        Boolean entering = intent.getBooleanExtra(key, true);
+        if (entering) {
+            Log.d(getClass().getSimpleName(), "entering");
+
+        }
+        else {
+            Log.d(getClass().getSimpleName(), "exiting");
+        }
+
+    }
+
+
+    /*
+    @Override
+    public void onReceive(Context context, Intent intent) {
         // Key for determining whether user is leaving or entering
         String key = LocationManager.KEY_PROXIMITY_ENTERING;
 
@@ -51,5 +67,5 @@ public class ProximityReceiver extends BroadcastReceiver {
             Log.i("Sortie", "Thank you for visiting my Area,come back again !!");
             Toast.makeText(context, "Thank you for visiting my Area,come back again !!" + state, Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 }

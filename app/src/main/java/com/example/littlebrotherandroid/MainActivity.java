@@ -2,6 +2,7 @@ package com.example.littlebrotherandroid;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
@@ -30,8 +32,22 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
+    private static final long MINIMUM_DISTANCECHANGE_FOR_UPDATE = 1;               // in meters
+    private static final long MINIMUM_TIME_BETWEEN_UPDATE = 1;                  // in Milliseconds
+    private static final long POINT_RADIUS = 30;                                     // in meters
+    private static final long PROX_ALERT_EXPIRATION = -1;
+    private static final String POINT_LATITUDE_KEY = "POINT_LATITUDE_KEY";
+    private static final String POINT_LONGITUDE_KEY = "POINT_LONGITUDE_KEY";
 
+    private static final String PROX_ALERT_INTENT = "King Hendo Tools";
+
+    private LocationManager lm;
+    private MyLocationListener mylistener;
+
+    private IntentFilter intFilter;
+
+    private AppBarConfiguration mAppBarConfiguration;
+/*
     //Test localisation
     LocationManager locationManager;
     //définir deux variables pour la latitude et la longitude
@@ -40,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     float radius = 100;
     //Intent Action
     String ACTION_FILTER = "com.example.littlebrotherandroid";
-
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +76,127 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+// Get the location Manager  (code from http://examples.javacodegeeks.com/android/core/location/android-location-based-services-example/)
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        lm.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                MINIMUM_TIME_BETWEEN_UPDATE,
+                MINIMUM_DISTANCECHANGE_FOR_UPDATE,
+                new MyLocationListener());
+
+        // the last known location of the provider
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Toast.makeText(this, "Lat" + location.getLatitude() + "Lon" + location.getLongitude(), Toast.LENGTH_SHORT).show();
+        addProximityAlert(48.8180786, 2.2121773);
+
+
+        mylistener = new MyLocationListener();
+
+        if (location != null) {
+            mylistener.onLocationChanged(location);
+        } else {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
+        // location updates: at least 15 meters and 1 seconds change
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 15, mylistener);
+        Toast.makeText(this, "Lat" + location + "Lon" + location.getLongitude(), Toast.LENGTH_SHORT).show();
+    }
+
+    private class MyLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+    }
+
+    private void addProximityAlert(double latitude, double longitude) {
+        Intent intent = new Intent(PROX_ALERT_INTENT);
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        lm.addProximityAlert(
+                latitude, // the latitude of the central point of the alert region
+                longitude, // the longitude of the central point of the alert region
+                POINT_RADIUS, // the radius of the central point of the alert region, in meters
+                PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
+                proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
+        );
+
+
+/*
+        lm.addProximityAlert(48.8180786, 2.2121773, 30, 10000, proximityIntent);
+        lm.addProximityAlert(38.196, -84.8674, 6, 10000, proximityIntent);
+        lm.addProximityAlert(38.19518, -84.8666, 6, 10000, proximityIntent);
+        lm.addProximityAlert(38.19472, -84.8661, 6, 10000, proximityIntent);
+        lm.addProximityAlert(38.19388, -84.8649, 6, 10000, proximityIntent);
+        lm.addProximityAlert(38.19353, -84.8647, 6, 10000, proximityIntent);
+        lm.addProximityAlert(38.19373, -84.8661, 6, 10000, proximityIntent);
+*/
+        IntentFilter filter = new IntentFilter(PROX_ALERT_INTENT);
+        registerReceiver(new ProximityReceiver(), filter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 15, mylistener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        lm.removeUpdates(mylistener);
+    }
+
+
+        /*
         IntentFilter filter = new IntentFilter(ACTION_FILTER);
         registerReceiver(new ProximityReceiver(), filter);
         //l'enregistrement de notre BrodcastReceiver
@@ -90,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             locationManager.addProximityAlert(latitude, longitude, radius, -1, pi);
             Toast.makeText(this, "Added new proximity alert event...", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
 
     @Override
