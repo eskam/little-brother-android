@@ -72,7 +72,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
     private EditText littleBrother;
     private EditText nameCamera;
-    private EditText radius;
 
     private static final String TAG = "AddCameraFragment";
 
@@ -108,7 +107,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
         littleBrother = root.findViewById(R.id.edittext_littlebrother_mail);
         nameCamera = root.findViewById(R.id.edittext_name_camera);
-        radius = root.findViewById(R.id.edittext_radius);
 
         Button buttonAddCamera = root.findViewById(R.id.button_add_camera);
         buttonAddCamera.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +133,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
-                googleMap.clear();
                 mMapView.onResume();
 
                 if (mLocationPermissionsGranted) {
@@ -251,17 +248,11 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
                     .title(title);
             googleMap.addMarker(markerOptions);
             googleMap.setOnMarkerDragListener(this);
-            // Cercle
-            //CircleOptions circleOptions = new CircleOptions()
-                    //.center(latLng)
-                    //.radius(Double.parseDouble(radius.getText().toString())); // In meters
-            // Get back the mutable Circle
-            //googleMap.addCircle(circleOptions);
         }
         Toast.makeText(getActivity(), "latLng" + latLng, Toast.LENGTH_SHORT).show();
         cameraModel.setLatitude(latLng.latitude);
         cameraModel.setLongitude(latLng.longitude);
-        cameraModel.setLittleBrother("30");
+        //cameraModel.setLittleBrother("30");
         hideSoftKeyboard();
     }
 
@@ -322,7 +313,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         String name = nameCamera.getText().toString().trim();
         String little = littleBrother.getText().toString().trim();
         String big = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        double rad = Double.parseDouble(radius.getText().toString().trim());
 
         if (name.isEmpty() || little.isEmpty()) {
             Toast.makeText(getActivity(), "Veuillez remplir les champs", Toast.LENGTH_LONG).show();
@@ -361,7 +351,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-
+        googleMap.clear();
     }
 
     @Override
@@ -387,13 +377,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
                 .position(new LatLng(latitude, longitude))
                 .title(title);
         googleMap.addMarker(markerOptions);
-
-        // Cercle
-        CircleOptions circleOptions = new CircleOptions()
-                .center(new LatLng(latitude, longitude))
-                .radius(30); // In meters
-        // Get back the mutable Circle
-        googleMap.addCircle(circleOptions);
 
         hideSoftKeyboard();
     }

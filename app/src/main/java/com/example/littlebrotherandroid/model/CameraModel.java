@@ -48,6 +48,7 @@ public class CameraModel{
      * @param bigBrother
      * @param latitude
      * @param longitude
+
      */
     public CameraModel(String name, String littleBrother, String bigBrother, Double latitude, Double longitude) {
         this.name = name;

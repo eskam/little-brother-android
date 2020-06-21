@@ -30,11 +30,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edittext_littlebrother_mail">
 
-
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
 
         <RelativeLayout
             android:id="@+id/relLayout1"
@@ -67,15 +67,8 @@
                 android:textColor="#000"
                 android:textSize="15sp" />
         </RelativeLayout>
-
-        <EditText
-            android:id="@+id/edittext_radius"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:hint="Radius"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/white_border"/>
     </RelativeLayout>
+
 
     <EditText
         android:id="@+id/edittext_littlebrother_mail"
