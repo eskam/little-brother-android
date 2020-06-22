@@ -84,12 +84,14 @@ public class CameraHolder extends RecyclerView.ViewHolder {
                 public boolean onLongClick(View view) {
                     Log.i("long click", "long");
                     if (DataMap.getInstance().pendingIntent.get(cameraModel.getId()) != null) {
+                        Log.i("long click", cameraModel.getId());
                         Intent intent = new Intent(PROX_ALERT_INTENT);
                         intent.putExtra("ID", ProximityReceiver.indent);
                         intent.putExtra("camera_id", cameraModel.getId());
-                        intent.putExtra(LocationManager.KEY_PROXIMITY_ENTERING, cameraModel.getId());//added by addproximityalert
+                        intent.putExtra(LocationManager.KEY_PROXIMITY_ENTERING, true);//added by addproximityalert
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ProximityReceiver.indent, intent, PendingIntent.FLAG_ONE_SHOT);
                         try {
-                            DataMap.getInstance().pendingIntent.get(cameraModel.getId()).send(context, 0, intent);
+                            pendingIntent.send(context, 0, intent);
                         } catch (PendingIntent.CanceledException e) {
                             e.printStackTrace();
                         }
