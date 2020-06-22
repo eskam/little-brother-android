@@ -206,6 +206,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
     }
 
     private void geoLocate() {
+        googleMap.clear();
         Log.d(TAG, "geoLocate: geolocating");
 
         String searchString = mSearchText.getText().toString();
@@ -350,7 +351,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-        googleMap.clear();
+
     }
 
     @Override
@@ -360,7 +361,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-            //final LatLng latLng = new LatLng(latitude = marker.getPosition().latitude, longitude = marker.getPosition().longitude);
         latitude = marker.getPosition().latitude;
         longitude = marker.getPosition().longitude;
 
