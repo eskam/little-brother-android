@@ -26,7 +26,6 @@ public class CameraModel{
     @SerializedName("longitude")
     @Expose
     private Double longitude;
-    @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("accept")
@@ -49,6 +48,7 @@ public class CameraModel{
      * @param bigBrother
      * @param latitude
      * @param longitude
+
      */
     public CameraModel(String name, String littleBrother, String bigBrother, Double latitude, Double longitude) {
         this.name = name;

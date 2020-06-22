@@ -1,31 +1,30 @@
-package com.example.littlebrotherandroid;
+package com.example.littlebrotherandroid.data;
 
-import android.location.LocationManager;
 import android.util.Log;
 
+import com.example.littlebrotherandroid.Auth;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CameraList {
+public class DataCamera {
     public List<CameraModel> bigBro = new ArrayList<>();
     public List<CameraModel> litBro = new ArrayList<>();
 
-    private static CameraList instance = new CameraList();
-    private CameraList(){
+    private static DataCamera instance = new DataCamera();
+    private DataCamera(){
        refreshBig(null);
        refreshLittle(null);
     }
     public void refreshBig(Action action) {
-        Call<Map<String, CameraModel>> callBig = Rest.getInstance().cameraRest.getBig("Bearer " + Auth.getInstance().firebaseKey);
+        Call<Map<String, CameraModel>> callBig = Rest.getInstance().camera.getBig("Bearer " + Auth.getInstance().firebaseKey);
 
         callBig.enqueue(new Callback<Map<String, CameraModel>>() {
             @Override
@@ -49,7 +48,7 @@ public class CameraList {
         });
     }
     public void refreshLittle(Action action){
-        Call<Map<String, CameraModel>> callLittle = Rest.getInstance().cameraRest.getLittle("Bearer " + Auth.getInstance().firebaseKey);
+        Call<Map<String, CameraModel>> callLittle = Rest.getInstance().camera.getLittle("Bearer " + Auth.getInstance().firebaseKey);
 
         callLittle.enqueue(new Callback<Map<String, CameraModel>>() {
             @Override
@@ -72,7 +71,7 @@ public class CameraList {
             }
         });
     }
-    public static CameraList getInstance(){
+    public static DataCamera getInstance(){
         return instance;
     }
     public interface Action{

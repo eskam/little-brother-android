@@ -1,9 +1,12 @@
 package com.example.littlebrotherandroid.ui.recyclerViewCamera;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,20 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.littlebrotherandroid.Auth;
-import com.example.littlebrotherandroid.CameraList;
+import com.example.littlebrotherandroid.data.DataCamera;
+import com.example.littlebrotherandroid.data.DataMap;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,8 +37,8 @@ import retrofit2.Response;
 
 public class CameraHolder extends RecyclerView.ViewHolder {
 
-    public CameraModel camera;
 
+    public View itemView;
     public TextView name_camera;
     public TextView little_brother;
     public TextView big_brothers;
@@ -43,6 +46,8 @@ public class CameraHolder extends RecyclerView.ViewHolder {
     public ImageButton refuser;
     public MapView minimap;
     public GoogleMap gmap;
+    private static final String PROX_ALERT_INTENT = "com.example.littlebrotherandroid.ProximityReceiver";
+
 
 
     public CameraHolder(@NonNull View itemView) {
@@ -54,9 +59,10 @@ public class CameraHolder extends RecyclerView.ViewHolder {
         accepter = itemView.findViewById(R.id.accept);
         refuser = itemView.findViewById(R.id.denied);
         minimap = itemView.findViewById(R.id.minimap);
+        this.itemView = itemView;
     }
 
-    public void bind(CameraModel cameraModel, CameraAdapter cameraAdapter){
+    public void bind(CameraModel cameraModel, CameraAdapter cameraAdapter, Context context){
         name_camera.setText(cameraModel.getName());
         little_brother.setText(cameraModel.getLittleBrother());
         big_brothers.setText(cameraModel.getBigBrother());
@@ -64,8 +70,32 @@ public class CameraHolder extends RecyclerView.ViewHolder {
         if(cameraModel.getAccept() || !cameraAdapter.showAccept)
             accepter.setVisibility(View.GONE);
 
+        if (cameraAdapter.showAccept && cameraModel.getAccept()){
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Intent intent = new Intent(PROX_ALERT_INTENT);
+                    intent.putExtra("camera_id", cameraModel.getId());
+                    intent.putExtra(LocationManager.KEY_PROXIMITY_ENTERING, cameraModel.getId());//added by addproximityalert
+                    try {
+                        DataMap.getInstance().pendingIntent.get(cameraModel.getId()).send(context,0, intent);
+                    } catch (PendingIntent.CanceledException e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+            });
+        }
+
         refuser.setOnClickListener(e ->{
-            Call<ResponseBody> call = Rest.getInstance().cameraRest.delete("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
+            if (cameraAdapter.showAccept) {
+                PendingIntent pendingIntent = DataMap.getInstance().pendingIntent.get(cameraModel.getId());
+                if (pendingIntent != null) {
+                    DataMap.getInstance().locationManager.removeProximityAlert(pendingIntent);
+                }
+
+            }
+            Call<ResponseBody> call = Rest.getInstance().camera.delete("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -74,8 +104,8 @@ public class CameraHolder extends RecyclerView.ViewHolder {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-                    CameraList.getInstance().refreshLittle(cameraAdapter::notifyDataSetChanged);
-                    CameraList.getInstance().refreshBig(cameraAdapter::notifyDataSetChanged);
+                    DataCamera.getInstance().refreshLittle(cameraAdapter::notifyDataSetChanged);
+                    DataCamera.getInstance().refreshBig(cameraAdapter::notifyDataSetChanged);
                 }
 
                 @Override
@@ -87,13 +117,13 @@ public class CameraHolder extends RecyclerView.ViewHolder {
 
         });
         accepter.setOnClickListener(e ->{
-            Call<ResponseBody> call = Rest.getInstance().cameraRest.accept("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
+            Call<ResponseBody> call = Rest.getInstance().camera.accept("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
             call.enqueue(new Callback<ResponseBody>(){
 
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    CameraList.getInstance().refreshLittle(cameraAdapter::notifyDataSetChanged);
-                    CameraList.getInstance().refreshBig(cameraAdapter::notifyDataSetChanged);
+                    DataCamera.getInstance().refreshLittle(cameraAdapter::notifyDataSetChanged);
+                    DataCamera.getInstance().refreshBig(cameraAdapter::notifyDataSetChanged);
                 }
 
                 @Override

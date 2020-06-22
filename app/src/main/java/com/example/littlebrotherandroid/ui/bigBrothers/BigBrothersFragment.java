@@ -8,14 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.littlebrotherandroid.CameraList;
+import com.example.littlebrotherandroid.data.DataCamera;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.ui.recyclerViewCamera.CameraAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class BigBrothersFragment extends Fragment {
 
@@ -33,17 +31,17 @@ public class BigBrothersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        cameraAdapter = new CameraAdapter(CameraList.getInstance().bigBro, false);
+        cameraAdapter = new CameraAdapter(DataCamera.getInstance().bigBro, false);
         recyclerView.setAdapter(cameraAdapter);
 
-        CameraList.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
+        DataCamera.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
         return root;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        CameraList.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
+        DataCamera.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
 
     }
 
@@ -51,7 +49,7 @@ public class BigBrothersFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden)
-            CameraList.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
+            DataCamera.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
 
     }
 }
