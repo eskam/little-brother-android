@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.littlebrotherandroid.data.DataCamera;
 import com.example.littlebrotherandroid.R;
@@ -34,7 +35,20 @@ public class BigBrothersFragment extends Fragment {
         cameraAdapter = new CameraAdapter(DataCamera.getInstance().bigBro, false);
         recyclerView.setAdapter(cameraAdapter);
 
-        DataCamera.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
+        SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                DataCamera.getInstance().refreshBig(() -> {
+                    cameraAdapter.notifyDataSetChanged();
+                });
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+        DataCamera.getInstance().refreshBig(() -> {
+            cameraAdapter.notifyDataSetChanged();
+        });
         return root;
     }
 

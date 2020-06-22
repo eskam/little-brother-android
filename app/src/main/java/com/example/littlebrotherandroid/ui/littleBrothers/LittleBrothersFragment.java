@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.littlebrotherandroid.ProximityReceiver;
 import com.example.littlebrotherandroid.data.DataCamera;
@@ -65,21 +66,24 @@ public class LittleBrothersFragment extends Fragment {
                 Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_add_camera);
             }
         });
-        DataCamera.getInstance().refreshLittle(this::initProximityAlert);
-        DataCamera.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
 
+        SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                DataCamera.getInstance().refreshLittle(() -> {
+                    cameraAdapter.notifyDataSetChanged();
+                    initProximityAlert();
+                });
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+        DataCamera.getInstance().refreshLittle(() -> {
+            cameraAdapter.notifyDataSetChanged();
+            initProximityAlert();
+        });
         return root;
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        DataCamera.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        DataCamera.getInstance().refreshLittle(() -> {cameraAdapter.notifyDataSetChanged();});
     }
 
     public void initProximityAlert(){

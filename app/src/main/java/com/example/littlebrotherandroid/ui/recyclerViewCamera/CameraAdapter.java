@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CameraAdapter extends RecyclerView.Adapter<CameraHolder> {
 
-    private List<CameraModel> cameraModels;
+    public List<CameraModel> cameraModels;
     public boolean showAccept;
     private Context context;
     public CameraAdapter(List<CameraModel> cameraModels, boolean showAccept){

@@ -8,8 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -25,9 +25,14 @@ public class UserDocFragment extends Fragment {
 
     private UserDocViewModel userDocViewModel;
 
+    public static UserDocFragment newInstance() {
+        return new UserDocFragment();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.i("userdoc", "userdoc");
 
         userDocViewModel =
                 ViewModelProviders.of(this).get(UserDocViewModel.class);
