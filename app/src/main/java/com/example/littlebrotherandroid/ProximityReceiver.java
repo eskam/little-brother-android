@@ -37,16 +37,40 @@ public class ProximityReceiver extends BroadcastReceiver {
         else
             return;
         String key = LocationManager.KEY_PROXIMITY_ENTERING;
-        Boolean entering = intent.getBooleanExtra(key, true);
+        boolean entering = intent.getBooleanExtra(key, true);
         String id = intent.getStringExtra("camera_id");
+        Log.i("camera notification", id);
+
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), id);
         if (entering) {
             Log.d(getClass().getSimpleName(), "entering");
             Call<ResponseBody> call= Rest.getInstance().log.sendLog("Bearer "+ Auth.getInstance().firebaseKey, body, true);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Log.i("log sent", "in");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
         }
         else {
             Log.d(getClass().getSimpleName(), "exiting");
-            Rest.getInstance().log.sendLog("Bearer "+ Auth.getInstance().firebaseKey, body, false);
+            Call<ResponseBody> call=Rest.getInstance().log.sendLog("Bearer "+ Auth.getInstance().firebaseKey, body, false);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Log.i("log sent", "out");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
         }
 
     }
