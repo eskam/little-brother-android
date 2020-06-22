@@ -78,6 +78,7 @@
             android:layout_weight="1"
             android:backgroundTint="#F44336"
             app:srcCompat="@drawable/ic_baseline_clear_24" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

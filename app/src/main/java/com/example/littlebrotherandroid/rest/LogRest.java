@@ -10,6 +10,6 @@ import retrofit2.http.Query;
 
 public interface LogRest {
 
-    @POST("/app/camera/log")
-    Call<ResponseBody> sendLog(@Header("Authorization") String userkey, @Body RequestBody cameraId, @Query("sens") String sens);
+    @POST("/app/logs")
+    Call<ResponseBody> sendLog(@Header("Authorization") String userkey, @Body RequestBody cameraId, @Query("enter") boolean sens);
 }

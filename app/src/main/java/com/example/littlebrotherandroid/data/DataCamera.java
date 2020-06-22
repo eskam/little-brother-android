@@ -24,19 +24,30 @@ public class DataCamera {
        refreshLittle(null);
     }
     public void refreshBig(Action action) {
+        Log.i("refresh big", "begin");
+
         Call<Map<String, CameraModel>> callBig = Rest.getInstance().camera.getBig("Bearer " + Auth.getInstance().firebaseKey);
 
         callBig.enqueue(new Callback<Map<String, CameraModel>>() {
             @Override
             public void onResponse(Call<Map<String, CameraModel>> call, Response<Map<String, CameraModel>> response) {
+                Log.i("refresh big", "response");
                 Map<String, CameraModel> bigMap = response.body();
                 if (bigMap != null) {
                     List<CameraModel> list = new ArrayList<CameraModel>(bigMap.values());
                     if (!list.equals(bigBro)) {
                         bigBro.clear();
                         bigBro.addAll(list);
-                        if (action != null)
+                        if (action != null) {
+                            Log.i("refresh big", "action ok");
                             action.action();
+                        }
+                    }
+                } else {
+                    bigBro.clear();
+                    if ( action != null) {
+                        Log.i("refresh big", "action ok map empty");
+                        action.action();
                     }
                 }
             }
@@ -48,21 +59,31 @@ public class DataCamera {
         });
     }
     public void refreshLittle(Action action){
+        Log.i("refresh little", "begin");
         Call<Map<String, CameraModel>> callLittle = Rest.getInstance().camera.getLittle("Bearer " + Auth.getInstance().firebaseKey);
 
         callLittle.enqueue(new Callback<Map<String, CameraModel>>() {
             @Override
             public void onResponse(Call<Map<String, CameraModel>> call, Response<Map<String, CameraModel>> response) {
+                Log.i("refresh little", "response");
                 Map<String, CameraModel> litMap = response.body();
                 if (litMap != null) {
+                    Log.i("refresh little", "map not empty");
                     List<CameraModel> list = new ArrayList<CameraModel>(litMap.values());
                     if (compareList(litBro, list)){
+                        Log.i("refresh little", "compare ok");
                         litBro.clear();
                         litBro.addAll(list);
                          if ( action != null) {
-                             Log.i("refresh", "ref");
+                             Log.i("refresh little", "action ok");
                              action.action();
                          }
+                    }
+                } else {
+                    litBro.clear();
+                    if ( action != null) {
+                        Log.i("refresh little", "action ok map empty");
+                        action.action();
                     }
                 }
             }
