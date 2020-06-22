@@ -31,7 +31,8 @@ public class Auth{
                 Log.w("error", "getInstanceId failed", task.getException());
                 return;
             }
-            fcmKey = task.getResult().getToken();
+            if (task.getResult() != null)
+                fcmKey = task.getResult().getToken();
             RequestBody body = RequestBody.create(MediaType.parse("text/plain"), fcmKey);
             Call<ResponseBody> call = Rest.getInstance().fcm.sendToken("Bearer " + firebaseKey, body);
             call.enqueue(new Callback<ResponseBody>() {
@@ -62,14 +63,19 @@ public class Auth{
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.addIdTokenListener(new FirebaseAuth.IdTokenListener() {
             @Override
-            public void onIdTokenChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
-                    if (task.isSuccessful())
-                        firebaseKey = task.getResult().getToken();
-                    Log.i("firebase_token", firebaseKey);
-                    getFcmToken(action);
-                });
+            public void onIdTokenChanged(FirebaseAuth firebaseAuth) {
+                FirebaseUser firebaseUser = null;
+                if (firebaseAuth != null)
+                    firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
+                        if (task.isSuccessful())
+                            if (task.getResult() != null)
+                                firebaseKey = task.getResult().getToken();
+                        Log.i("firebase_token", firebaseKey);
+                        getFcmToken(action);
+                    });
+                }
             }
         });
     }

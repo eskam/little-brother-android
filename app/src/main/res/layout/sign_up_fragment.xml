@@ -11,12 +11,14 @@
     android:orientation="vertical">
     <EditText
         android:id="@+id/edit_text_email"
+        android:hint="E mail"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </EditText>
     <EditText
         android:id="@+id/edit_text_password"
+        android:hint="Pass Word"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
