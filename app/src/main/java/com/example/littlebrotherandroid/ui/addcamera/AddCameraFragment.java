@@ -30,7 +30,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import com.example.littlebrotherandroid.Auth;
-import com.example.littlebrotherandroid.CameraList;
+import com.example.littlebrotherandroid.data.DataCamera;
 import com.example.littlebrotherandroid.R;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
@@ -42,7 +42,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -308,7 +307,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public void addCamera(CameraList.Action action) {
+    public void addCamera(DataCamera.Action action) {
         boolean statusRequest = true;
         String name = nameCamera.getText().toString().trim();
         String little = littleBrother.getText().toString().trim();

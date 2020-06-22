@@ -1,7 +1,8 @@
-package com.example.littlebrotherandroid;
+package com.example.littlebrotherandroid.data;
 
 import android.util.Log;
 
+import com.example.littlebrotherandroid.Auth;
 import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
 
@@ -13,12 +14,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CameraList {
+public class DataCamera {
     public List<CameraModel> bigBro = new ArrayList<>();
     public List<CameraModel> litBro = new ArrayList<>();
 
-    private static CameraList instance = new CameraList();
-    private CameraList(){
+    private static DataCamera instance = new DataCamera();
+    private DataCamera(){
        refreshBig(null);
        refreshLittle(null);
     }
@@ -70,7 +71,7 @@ public class CameraList {
             }
         });
     }
-    public static CameraList getInstance(){
+    public static DataCamera getInstance(){
         return instance;
     }
     public interface Action{
