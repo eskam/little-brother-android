@@ -63,8 +63,10 @@ public class Auth{
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.addIdTokenListener(new FirebaseAuth.IdTokenListener() {
             @Override
-            public void onIdTokenChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            public void onIdTokenChanged(FirebaseAuth firebaseAuth) {
+                FirebaseUser firebaseUser = null;
+                if (firebaseAuth != null)
+                    firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     firebaseUser.getIdToken(true).addOnCompleteListener(task -> {
                         if (task.isSuccessful())
