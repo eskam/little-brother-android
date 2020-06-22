@@ -237,7 +237,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         // Button zoom
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         // localisation du mobile
-        //googleMap.setMyLocationEnabled(true);
+         //googleMap.setMyLocationEnabled(true);
         googleMap.getUiSettings().setMapToolbarEnabled(true);
 
         // Marker

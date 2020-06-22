@@ -6,14 +6,20 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.example.littlebrotherandroid.model.CameraModel;
 import com.example.littlebrotherandroid.rest.Rest;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ProximityReceiver extends BroadcastReceiver {

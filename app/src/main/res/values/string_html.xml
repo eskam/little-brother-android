@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="html"><![CDATA[<div class="stackedit__html"><h1 id="application-mobile-little-brother">Application mobile Little Brother</h1>
+<p><strong>Guide utilisateur</strong></p>
+<p><strong>Sommaire</strong></p>
+<p><strong>Règles générales de navigation au sein de l’application Little Brother  3</strong></p>
+<p><strong>Créez votre compte et vous connecter  4</strong></p>
+<p>Créez votre compte  4</p>
+<p>Vous connecter  4</p>
+<p>Vous déconnecter  4</p>
+<p><strong>Créez vos caméras et les activer  5</a></strong></p>
+<p>Créez une caméra  5</p>
+<p>Activer vos caméras  5</p>
+<p>Supprimer une caméra  5</p>
+<p>Notification  5</p>
+<h1 id="règles-générales-de-navigation-au-sein-de-l’application-little-brother">Règles générales de navigation au sein de l’application Little Brother</h1>
+<p><strong>Vous trouverez ci-dessous, les généralités de navigation et de fonctionnement de l’application Little Brother. Ces informations vous seront utiles pour une prise en main aisée des différentes fonctionnalités proposées.</strong></p>
+<p>L’icône en haut à gauche présent sur les écrans principaux permet d’afficher le menu général.</p>
+<p>Le Menu général vous permet d’utiliser l’ensemble des fonctionnalités proposées par l’application.</p>
+<p>Appuyez sur la commande de votre choix, pour accéder à l’écran concerné.</p>
+<p>Certains écrans affichent le signe <strong>+</strong>, cela indique la possibilité d’ajout (modèle de surveillance). Appuyez sur ce symbole pour démarrer toute nouvelle demande.</p>
+<p>La flèche tourné vers la gauche, <strong>&lt;—</strong> permet de revenir à l’écran précédent.</p>
+<h1 id="gérer-votre-compte">Gérer votre compte</h1>
+<h2 id="créez-votre-compte">Créez votre compte</h2>
+<p>Lors de la première utilisation de l’application, la création d’un compte utilisateur est obligatoire.</p>
+<p>① Appuyez sur le lien « create account » de l’écran d’accueil.</p>
+<p>② Indiquez votre email et le mot de passe souhaité, via l’écran Inscription.</p>
+<p>③ Appuyez enfin sur le bouton « SIGN UP » situé en dessous.</p>
+<p>Remarque :</p>
+<p>Votre compte est ensuite créé directement, vous pouvez donc vous connecter directement.</p>
+<h2 id="vous-connecter">Vous connecter</h2>
+<p>Une fois, l’inscription réalisée, vous serez automatiquement connectée à l’application. Cependant il faudra pour la suite vous reconnecter.</p>
+<p>① Appuyez sur le lien « already registered » de l’écran d’accueil.</p>
+<p>② Indiquez votre email et le mot de passe via l’écran afficher.</p>
+<p>③ Appuyez ensuite sur le bouton « connexion » situé en dessous.</p>
+<p>Remarque :</p>
+<p>Vous serez connecté automatiquement tant que vous ne vous déconnectez pas de l’application.</p>
+<h2 id="vous-déconnecter">Vous déconnecter</h2>
+<p>Lorsque que vous êtes connectés à l’application afin de pouvoir vous déconnecter, il vous suffit :</p>
+<p>① d’allez dans le menu en haut à gauche</p>
+<p>② cliquer sur « Log Out «</p>
+<h1 id="créez-vos-caméras-et-les-activer">Créez vos caméras et les activer</h1>
+<h2 id="créez-une-caméra">Créez une caméra</h2>
+<p>Après votre inscription vous pouvez dès à présent créer vos caméras afin de suivre ou être suivi par vos proche (les personnes doivent être inscrite ??).</p>
+<p>① Plusieurs possibilité, utilisez la commande « Ajouter une caméra » du menu général, vous pouvez aussi utilisé les + situé dans les pages Littles Brother et Big Brother.</p>
+<p>② Indiquer un nom à votre caméra</p>
+<p>③ Sélectionner l’adresse mail de l’autre personne.</p>
+<p>④ Vous pouvez maintenant rechercher l’adresse pour votre zone</p>
+<p>⑤ Si la position du marqueur ne vous convient pas, il vous ai tout à fait possible de le déplacer en restant appuyer dessus.</p>
+<p>⑥ Une fois toutes les informations compléter vous pouvez appuyer sur le bouton « ajouter une caméra »</p>
+<h2 id="activer-vos-caméras">Activer vos caméras</h2>
+<p>Vous pourrez retrouver dans Little Brother du menu général les différentes caméra mise en place pour vous.</p>
+<p>① Vous avez maintenant la possibilité d’accepter ou bien de refuser les caméras, une fois celle-ci accepter seul un bouton supprimer restera.</p>
+<p>② Grâce à la carte situé à droite vous aurez la possibilité de vérifier la zone concerné par la caméra.</p>
+<h2 id="supprimer-une-caméra">Supprimer une caméra</h2>
+<p>Vous avez la possibilité de supprimer une caméra après avoir accepter celle-ci et pour cela il vous suffit simplement de cliquer sur la croix qui concerne la caméra à supprimer.</p>
+<h2 id="notification">Notification</h2>
+<p>Lorsque vous accepter une caméra en tant que Little Brother vous allez donc recevoir des notifications d’entrée et sortie de zone, la zone correspondant à l’adresse indiqué dans la caméra ainsi qu’à un rayon de 30 mètres qui dès qu’il ait franchi envoie une notification.</p>
+</div>
+]]></string>
+
+</resources>

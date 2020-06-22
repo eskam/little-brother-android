@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.userDoc.UserDocFragment">
 
-
-    <TextView
-        android:id="@+id/userDoc"
+    <ScrollView
+        android:id="@+id/recycler_v"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="" />
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/userDoc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="" />
+    </ScrollView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
