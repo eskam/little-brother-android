@@ -115,8 +115,8 @@ public class CameraHolder extends RecyclerView.ViewHolder {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     Log.i("refuser response ok", cameraModel.getName());
-                    DataCamera.getInstance().refreshLittle(cameraAdapter::notifyDataSetChanged);
-                    DataCamera.getInstance().refreshBig(cameraAdapter::notifyDataSetChanged);
+                    cameraAdapter.cameraModels.remove(cameraModel);
+                    cameraAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -134,8 +134,8 @@ public class CameraHolder extends RecyclerView.ViewHolder {
 
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    DataCamera.getInstance().refreshLittle(cameraAdapter::notifyDataSetChanged);
-                    DataCamera.getInstance().refreshBig(cameraAdapter::notifyDataSetChanged);
+                    cameraModel.setAccept(true);
+                    cameraAdapter.notifyDataSetChanged();
                     DataMap.getInstance().pendingIntent.put(cameraModel.getId(), addProximityAlert(cameraModel));
                     Log.i("proximity alert on", cameraModel.getName());
                 }

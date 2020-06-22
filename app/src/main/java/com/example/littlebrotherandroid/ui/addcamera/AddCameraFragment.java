@@ -341,7 +341,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.w("response rest error", "error!!!!!", t);
-                Toast.makeText(getActivity(), "error when sending camera", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "error when  recevieng send camera response", Toast.LENGTH_SHORT).show();
             }
         });
 
