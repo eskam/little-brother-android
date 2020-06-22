@@ -18,6 +18,12 @@
         tools:layout="@layout/sign_up_fragment" />
 
     <fragment
+        android:id="@+id/nav_user_doc"
+        android:name="com.example.littlebrotherandroid.ui.userDoc.UserDocFragment"
+        android:label="@string/menu_user_doc"
+        tools:layout="@layout/user_doc_fragment" />
+
+    <fragment
         android:id="@+id/nav_little_brothers"
         android:name="com.example.littlebrotherandroid.ui.littleBrothers.LittleBrothersFragment"
         android:label="@string/menu_little_brothers"
