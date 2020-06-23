@@ -6,7 +6,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="action_user_doc">User documentation</string>
+    <string name="action_user_doc">guide utilisateurs</string>
 
     <string name="menu_user_doc">User Doc.</string>
     <string name="menu_little_brothers">My Big Brothers</string>

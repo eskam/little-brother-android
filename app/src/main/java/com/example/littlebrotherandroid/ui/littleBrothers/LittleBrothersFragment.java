@@ -123,7 +123,6 @@ public class LittleBrothersFragment extends Fragment {
         intent.putExtra("ID", ProximityReceiver.indent);
         IntentFilter filter = new IntentFilter(PROX_ALERT_INTENT);
         requireActivity().registerReceiver(new ProximityReceiver(), filter);
-        Toast.makeText(getActivity(), "id" + cameraModel.getId(), Toast.LENGTH_SHORT).show();
         return proximityIntent;
     }
 }

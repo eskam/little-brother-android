@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,6 +56,7 @@ public class CameraHolder extends RecyclerView.ViewHolder {
     public ImageButton refuser;
     public MapView minimap;
     public GoogleMap gmap;
+    private ConstraintLayout progressLayout;
     private static final String PROX_ALERT_INTENT = "com.example.littlebrotherandroid.ProximityReceiver";
 
 
@@ -68,6 +70,10 @@ public class CameraHolder extends RecyclerView.ViewHolder {
         accepter = itemView.findViewById(R.id.accept);
         refuser = itemView.findViewById(R.id.denied);
         minimap = itemView.findViewById(R.id.minimap);
+
+        progressLayout = itemView.findViewById(R.id.progressLayout);
+        progressLayout.setVisibility(View.GONE);
+
         this.itemView = itemView;
     }
 
@@ -82,20 +88,14 @@ public class CameraHolder extends RecyclerView.ViewHolder {
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Log.i("long click", "long");
-                    if (DataMap.getInstance().pendingIntent.get(cameraModel.getId()) != null) {
-                        Log.i("long click", cameraModel.getId());
-                        Intent intent = new Intent(PROX_ALERT_INTENT);
-                        intent.putExtra("ID", ProximityReceiver.indent);
-                        intent.putExtra("camera_id", cameraModel.getId());
-                        intent.putExtra(LocationManager.KEY_PROXIMITY_ENTERING, true);//added by addproximityalert
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ProximityReceiver.indent, intent, PendingIntent.FLAG_ONE_SHOT);
-                        try {
-                            pendingIntent.send(context, 0, intent);
-                        } catch (PendingIntent.CanceledException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    Log.i("long click", cameraModel.getId());
+                    Intent intent = new Intent();
+                    intent.setAction(PROX_ALERT_INTENT);
+                    intent.putExtra("ID", ProximityReceiver.indent);
+                    intent.putExtra("camera_id", cameraModel.getId());
+                    intent.putExtra(LocationManager.KEY_PROXIMITY_ENTERING, true);//added by addproximityalert
+                    Log.i("sending intent", "begin");
+                    new ProximityReceiver().onReceive(context, intent);
                     return true;
                 }
             });
@@ -103,6 +103,7 @@ public class CameraHolder extends RecyclerView.ViewHolder {
 
         refuser.setOnClickListener(e ->{
             Log.i("refuser", cameraModel.getName());
+            progressLayout.setVisibility(View.VISIBLE);
             if (cameraAdapter.showAccept) {
                 PendingIntent pendingIntent = DataMap.getInstance().pendingIntent.get(cameraModel.getId());
                 if (pendingIntent != null) {
@@ -114,6 +115,7 @@ public class CameraHolder extends RecyclerView.ViewHolder {
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    progressLayout.setVisibility(View.GONE);
                     Log.i("refuser response ok", cameraModel.getName());
                     cameraAdapter.cameraModels.remove(cameraModel);
                     cameraAdapter.notifyDataSetChanged();
@@ -129,11 +131,13 @@ public class CameraHolder extends RecyclerView.ViewHolder {
 
         });
         accepter.setOnClickListener(e ->{
+            progressLayout.setVisibility(View.VISIBLE);
             Call<ResponseBody> call = Rest.getInstance().camera.accept("Bearer " + Auth.getInstance().firebaseKey, cameraModel.getId());
             call.enqueue(new Callback<ResponseBody>(){
 
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressLayout.setVisibility(View.GONE);
                     cameraModel.setAccept(true);
                     cameraAdapter.notifyDataSetChanged();
                     DataMap.getInstance().pendingIntent.put(cameraModel.getId(), addProximityAlert(cameraModel));
@@ -142,6 +146,7 @@ public class CameraHolder extends RecyclerView.ViewHolder {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    progressLayout.setVisibility(View.GONE);
 
                 }
                 private PendingIntent addProximityAlert(CameraModel cameraModel) {

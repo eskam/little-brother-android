@@ -7,11 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
@@ -31,6 +34,7 @@ public class SignInFragment extends Fragment {
 
     private Button signin;
     private TextView signup;
+    private ConstraintLayout progressLayout;
 
     private FirebaseAuth mAuth;
 
@@ -47,6 +51,9 @@ public class SignInFragment extends Fragment {
 
         signin = root.findViewById(R.id.signin);
         signup = root.findViewById(R.id.signup);
+
+        progressLayout = root.findViewById(R.id.progressLayout);
+        progressLayout.setVisibility(View.GONE);
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +75,11 @@ public class SignInFragment extends Fragment {
 
     public void testConnection() {
         if (mAuth.getCurrentUser() != null) {
-            Auth.getInstance().getToken( () ->
-                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_little_brothers));
+            progressLayout.setVisibility(View.VISIBLE);
+            Auth.getInstance().getToken( () -> {
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_little_brothers);
+                progressLayout.setVisibility(View.GONE);
+            });
         }
     }
 
@@ -81,18 +91,20 @@ public class SignInFragment extends Fragment {
             return;
         }
 
-
+        progressLayout.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d(TAG, "createUserWithEmail:success");
-                Auth.getInstance().getToken( () ->
-                        Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.nav_little_brothers)
-                );
+                Auth.getInstance().getToken( () -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_little_brothers);
+                    progressLayout.setVisibility(View.GONE);
+                });
 
             } else {
                 // If sign in fails, display a message to the user.
                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                progressLayout.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Registratation failed.", Toast.LENGTH_SHORT).show();
             }
         });

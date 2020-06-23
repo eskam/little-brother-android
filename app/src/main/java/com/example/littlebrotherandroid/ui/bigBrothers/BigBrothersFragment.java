@@ -41,8 +41,8 @@ public class BigBrothersFragment extends Fragment {
             public void onRefresh() {
                 DataCamera.getInstance().refreshBig(() -> {
                     cameraAdapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
                 });
-                swipeRefreshLayout.setRefreshing(false);
 
             }
         });
@@ -50,20 +50,5 @@ public class BigBrothersFragment extends Fragment {
             cameraAdapter.notifyDataSetChanged();
         });
         return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        DataCamera.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
-
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden)
-            DataCamera.getInstance().refreshBig(() -> {cameraAdapter.notifyDataSetChanged();});
-
     }
 }

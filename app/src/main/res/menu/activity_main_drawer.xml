@@ -6,10 +6,6 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_user_doc"
-            android:icon="@drawable/ic_baseline_help_24"
-            android:title="@string/menu_user_doc" />
-        <item
             android:id="@+id/nav_little_brothers"
             android:icon="@drawable/ic_baseline_photo_camera_24"
             android:title="@string/menu_little_brothers" />
@@ -21,6 +17,10 @@
             android:id="@+id/nav_add_camera"
             android:icon="@drawable/ic_add"
             android:title="@string/menu_add_camera"/>
+        <item
+            android:id="@+id/nav_user_doc"
+            android:icon="@drawable/ic_baseline_help_24"
+            android:title="@string/menu_user_doc" />
         <item
             android:id="@+id/nav_log_out"
             android:icon="@drawable/ic_baseline_power_settings_new_24"

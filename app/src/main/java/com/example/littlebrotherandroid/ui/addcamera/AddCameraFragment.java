@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -72,6 +73,8 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
     private EditText littleBrother;
     private EditText nameCamera;
 
+    private ConstraintLayout progressLayout;
+
     private static final String TAG = "AddCameraFragment";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -119,6 +122,10 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         mMapView = root.findViewById(R.id.mapView);
         mSearchText = root.findViewById(R.id.input_search);
         mMapView.onCreate(savedInstanceState);
+
+        progressLayout = root.findViewById(R.id.progressLayout);
+        progressLayout.setVisibility(View.GONE);
+
 
         getLocationPermission();
 
@@ -249,7 +256,6 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
             googleMap.addMarker(markerOptions);
             googleMap.setOnMarkerDragListener(this);
         }
-        Toast.makeText(getActivity(), "latLng" + latLng, Toast.LENGTH_SHORT).show();
         cameraModel.setLatitude(latLng.latitude);
         cameraModel.setLongitude(latLng.longitude);
         //cameraModel.setLittleBrother("30");
@@ -309,7 +315,8 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
     }
 
     public void addCamera(DataCamera.Action action) {
-        boolean statusRequest = true;
+        progressLayout.setVisibility(View.VISIBLE);
+
         String name = nameCamera.getText().toString().trim();
         String little = littleBrother.getText().toString().trim();
         String big = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -325,6 +332,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progressLayout.setVisibility(View.GONE);
                 try {
                     if (response.body() != null) {
                         Log.i("response rest ok", response.body().string());
@@ -341,6 +349,7 @@ public class AddCameraFragment extends Fragment implements GoogleMap.OnMarkerDra
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressLayout.setVisibility(View.GONE);
                 Log.w("response rest error", "error!!!!!", t);
                 Toast.makeText(getActivity(), "error when  recevieng send camera response", Toast.LENGTH_SHORT).show();
             }

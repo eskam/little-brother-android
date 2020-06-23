@@ -29,13 +29,16 @@ public class ProximityReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("sending intent", "intent received");
         Integer i = intent.getIntExtra("ID", 0);
         if (!set.contains(i)){
             set.add(i);
             indent ++;
         }
-        else
+        else {
+            indent++;
             return;
+        }
         String key = LocationManager.KEY_PROXIMITY_ENTERING;
         boolean entering = intent.getBooleanExtra(key, true);
         String id = intent.getStringExtra("camera_id");
