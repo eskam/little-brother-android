@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -34,6 +35,9 @@ public class SignUpFragment extends Fragment {
     private EditText edit_text_email;
     private EditText edit_text_password;
 
+    private ConstraintLayout progressLayout;
+
+
     private Button signup;
     private TextView signin;
 
@@ -49,6 +53,10 @@ public class SignUpFragment extends Fragment {
 
         signin = root.findViewById(R.id.signin);
         signup = root.findViewById(R.id.signup);
+
+        progressLayout = root.findViewById(R.id.progressLayout);
+        progressLayout.setVisibility(View.GONE);
+
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +75,7 @@ public class SignUpFragment extends Fragment {
 
 
     public void register() {
+        progressLayout.setVisibility(View.VISIBLE);
         String email = edit_text_email.getText().toString().trim();
         String password = edit_text_password.getText().toString().trim();
         if (isEmpty(email) || isEmpty(password)) {
@@ -76,6 +85,7 @@ public class SignUpFragment extends Fragment {
 
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity(), task -> {
+            progressLayout.setVisibility(View.GONE);
             if (task.isSuccessful()) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d(TAG, "createUserWithEmail:success");
